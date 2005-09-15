@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Copies PO files from a PgFoundry repository structure to a PostgreSQL
+# source tree.
+#
+# Usage: cp-po SOURCEDIR DESTDIR
+#
+# Written by Peter Eisentraut
+# Public domain
+
+set -e
+
+me=$(basename $0)
+
+srcdir=$1
+if [ -z "$srcdir" ]; then
+	echo "$me: no source directory specified" 1>&2
+	exit 1
+fi
+
+destdir=$2
+if [ -z "$destdir" ]; then
+	echo "$me: no destination directory specified" 1>&2
+	exit 1
+fi
+
+nls_mks=$(find "$destdir" -name nls.mk)
+
+for srcfile in $(find "$srcdir" -name '*.po'); do
+	base=$(echo X"$srcfile" | sed "s,^X$srcdir/*,,")
+	lang=$(expr $base : '\([a-z][a-zA-Z_]*\)')
+	srccat=$(expr $base : '.*/\([^/]*\)\.po$')
+
+	for y in $nls_mks; do
+		destcat=$(cat $y | sed -n 's/CATALOG_NAME[\t ]*:*= *\([^ ]*\)$/\1/p')
+		if [ -z "$destcat" ]; then
+			echo "$me: could not determine catalog name from $y; skipped" 1>&2
+			continue
+		fi
+		if [ "$srccat" = "$destcat" ]; then
+			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
+			echo "cp $srcfile $targetdir/$lang.po"
+		fi
+	done
+done
