@@ -32,14 +32,15 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 	srccat=$(expr $base : '.*/\([^/]*\)\.po$')
 
 	for y in $nls_mks; do
-		destcat=$(cat $y | sed -n 's/CATALOG_NAME[\t ]*:*= *\([^ ]*\)$/\1/p')
+		destcat=$(cat $y | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
 		if [ -z "$destcat" ]; then
 			echo "$me: could not determine catalog name from $y; skipped" 1>&2
 			continue
 		fi
 		if [ "$srccat" = "$destcat" ]; then
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
-			echo "cp $srcfile $targetdir/$lang.po"
+			echo " cp $srcfile $targetdir/$lang.po"
+			cp $srcfile $targetdir/$lang.po
 		fi
 	done
 done
