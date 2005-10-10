@@ -39,8 +39,10 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 		if [ "$srccat" = "$destcat" ]; then
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
-			echo " cp $srcfile $targetdir/$lang.po"
-			cp $srcfile $targetdir/$lang.po
+			if ! diff $srcfile $targetdir/$lang.po >/dev/null; then
+				echo " cp $srcfile $targetdir/$lang.po"
+				cp $srcfile $targetdir/$lang.po
+			fi
 		fi
 	done
 done
