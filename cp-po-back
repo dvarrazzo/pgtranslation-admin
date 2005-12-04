@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Copies PO files from a PostgreSQL source tree to a PgFoundry repository
+# structure.
+#
+# Usage: cp-po-back SOURCEDIR DESTDIR
+#
+# Written by Peter Eisentraut
+# Public domain
+
+set -e
+
+me=$(basename $0)
+
+srcdir=$1
+if [ -z "$srcdir" ]; then
+	echo "$me: no source directory specified" 1>&2
+	exit 1
+fi
+
+destdir=$2
+if [ -z "$destdir" ]; then
+	echo "$me: no destination directory specified" 1>&2
+	exit 1
+fi
+
+for srcfile in $(find "$srcdir" -name '*.po'); do
+	base=$(echo X"$srcfile" | sed "s,^X$srcdir/*,,")
+	lang=$(expr $base : '.*/\([^/]*\)\.po$')
+	srccat=$(cat $(dirname $srcfile)/../nls.mk | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
+
+	targetfile=$destdir/$lang/$srccat.po
+	used="$used $lang/$srccat.po "
+	if ! [ -e $targetfile ] || ! diff $srcfile $targetfile >/dev/null; then
+		[ -e $targetfile ] || new="$new $lang/$srccat.po"
+		echo " cp $srcfile $targetfile"
+		cp $srcfile $targetfile
+	fi
+done
+
+for file in $(find "$destdir" -name '*.po'); do
+	base=$(echo X"$file" | sed "s,^X$destdir/*,,")
+	if ! echo "$used" | fgrep -q " $base "; then
+		delete="$delete $base"
+	fi
+done
+
+if [ -n "$delete" ]; then
+	echo "DELETE$delete"
+fi
+
+if [ -n "$new" ]; then
+	echo "ADD$new"
+fi
