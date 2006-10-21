@@ -49,7 +49,10 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 		if [ "$srccat" = "$destcat" ]; then
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
-			if ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetdir/$lang.po >/dev/null; then
+			if [ ! -e $targetdir/$lang.po ]; then
+				echo "NEW: $targetdir/$lang.po --- file will be copied, but do \"cvs add\" and fix $y by hand" 1>&2
+			fi
+			if [ ! -e $targetdir/$lang.po ] || ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetdir/$lang.po >/dev/null; then
 				echo " cp $srcfile $targetdir/$lang.po"
 				$run cp $srcfile $targetdir/$lang.po
 			fi
