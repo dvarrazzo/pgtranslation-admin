@@ -3,7 +3,7 @@
 # Copies PO files from a PgFoundry repository structure to a PostgreSQL
 # source tree.
 #
-# Usage: cp-po SOURCEDIR DESTDIR
+# Usage: cp-po [-n] SOURCEDIR DESTDIR
 #
 # Written by Peter Eisentraut
 # Public domain
@@ -11,6 +11,16 @@
 set -e
 
 me=$(basename $0)
+
+TEMP=$(getopt n "$@")
+eval set -- "$TEMP"
+
+while true; do
+	case $1 in
+		-n)	run=: ; shift;;
+		--)	shift; break;;
+	esac
+done
 
 srcdir=$1
 if [ -z "$srcdir" ]; then
@@ -41,7 +51,7 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
 			if ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetdir/$lang.po >/dev/null; then
 				echo " cp $srcfile $targetdir/$lang.po"
-				cp $srcfile $targetdir/$lang.po
+				$run cp $srcfile $targetdir/$lang.po
 			fi
 		fi
 	done
