@@ -12,12 +12,14 @@ set -e
 
 me=$(basename $0)
 
+run=true
+
 TEMP=$(getopt n "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
-		-n)	run=: ; shift;;
+		-n)	run=false; shift;;
 		--)	shift; break;;
 	esac
 done
@@ -41,6 +43,12 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 	lang=$(expr $base : '\([a-z][a-zA-Z_]*\)')
 	srccat=$(expr $base : '.*/\([^/]*\)\.po$')
 
+	if ! msgfmt -o /dev/null -c -v $srcfile 2>/dev/null; then
+		echo "$me: $srcfile has errors" 1>&2
+		msgfmt -o /dev/null -c -v $srcfile
+		exit 1
+	fi
+
 	for y in $nls_mks; do
 		destcat=$(cat $y | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
 		if [ -z "$destcat" ]; then
@@ -49,12 +57,13 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 		if [ "$srccat" = "$destcat" ]; then
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
-			if [ ! -e $targetdir/$lang.po ]; then
-				echo "NEW: $targetdir/$lang.po --- file will be copied, but do \"cvs add\" and fix $y by hand" 1>&2
+			targetfile=$targetdir/$lang.po
+			if [ ! -e $targetfile ]; then
+				echo "NEW: $targetfile --- file will be copied, but do \"cvs add\" and fix $y by hand" 1>&2
 			fi
-			if [ ! -e $targetdir/$lang.po ] || ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetdir/$lang.po >/dev/null; then
-				echo " cp $srcfile $targetdir/$lang.po"
-				$run cp $srcfile $targetdir/$lang.po
+			if [ ! -e $targetfile ] || ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetfile >/dev/null; then
+				echo " $srcfile --> $targetfile"
+				$run && { cat $srcfile | sed 's/^\(# *\)$Id/\1pgtranslation Id/' >$targetfile; chmod 644 $targetfile; }
 			fi
 		fi
 	done
