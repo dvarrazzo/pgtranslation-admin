@@ -45,8 +45,8 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 
 	if ! msgfmt -o /dev/null -c -v $srcfile 2>/dev/null; then
 		echo "$me: $srcfile has errors" 1>&2
-		msgfmt -o /dev/null -c -v $srcfile
-		exit 1
+		msgfmt -o /dev/null -c -v $srcfile || :
+		continue
 	fi
 
 	for y in $nls_mks; do
