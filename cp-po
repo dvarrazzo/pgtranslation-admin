@@ -61,7 +61,7 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 			if [ ! -e $targetfile ]; then
 				echo "NEW: $targetfile --- file will be copied, but do \"cvs add\" and fix $y by hand" 1>&2
 			fi
-			if [ ! -e $targetfile ] || ! diff -I '\$\(Header\|Id\|PostgreSQL\):.*\$' $srcfile $targetfile >/dev/null; then
+			if [ ! -e $targetfile ] || ! diff -I '\(\$Header\|pgtranslation Id\|\$Id\|\$PostgreSQL\):.*\$' $srcfile $targetfile >/dev/null; then
 				echo " $srcfile --> $targetfile"
 				$run && { cat $srcfile | sed 's/^\(# *\)$Id/\1pgtranslation Id/' >$targetfile; chmod 644 $targetfile; }
 			fi
