@@ -1,0 +1,56 @@
+#! /usr/bin/perl -w
+
+# Prerequisites:
+# GNU make (envar GMAKE)
+# msgmerge (envar MSGMERGE)
+# msgfmt (envar MSGFMT)
+# Source tree updated and distprep'ed
+# Input files specified as arguments
+# Output directory specified by -o option
+# Produces various output on stderr
+
+use strict;
+
+use Getopt::Std;
+use File::Basename;
+
+my %opts;
+getopts('o:', \%opts) or die;
+my $outdir = $opts{'o'} || '.';
+
+my $gmake = $ENV{'GMAKE'} || 'gmake';
+my $msgmerge = $ENV{'MSGMERGE'} || 'msgmerge';
+my $msgfmt = $ENV{'MSGFMT'} || 'msgfmt';
+
+foreach (@ARGV) {
+    my $dirname = dirname($_);
+    open NLSMK, "<$_" or die "could not open $_: $!\n";
+
+    my $catalogname;
+    my @languages;
+    my $lang;
+
+    while (<NLSMK>) {
+	/^CATALOG_NAME\s*:?=\s*(\S+)\s*$/ and $catalogname = $1;
+	/^AVAIL_LANGUAGES\s*:?=\s*(.*)$/ and $lang = $1;
+    }
+
+    close NLSMK;
+
+    @languages = split /\s+/, $lang;
+
+    system("$gmake -C $dirname init-po") == 0 or die "$!\n";
+    system("cp -f $dirname/po/$catalogname.pot $outdir/$catalogname.pot") == 0 or die "$!\n";
+    print STDERR "* $catalogname\n";
+    foreach $lang (@languages) {
+	print STDERR "$lang: ";
+	if (system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $outdir/$catalogname-$lang.po") != 0) {
+            system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po") if (! -f "$outdir/$catalogname-$lang.po");
+        } else {
+            if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
+	        system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+	    }
+        }
+    }
+}

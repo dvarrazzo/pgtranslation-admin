@@ -1,0 +1,182 @@
+#! /usr/bin/perl -w
+
+# Prerequisites:
+# Input files given as argument (e.g., *.po)
+# set URL with -U option
+
+use strict;
+
+use File::Basename;
+use Getopt::Std;
+use POSIX qw(:math_h);
+
+my $msgfmt = $ENV{'MSGFMT'} || 'msgfmt';
+
+my %opts;
+getopts('t:U:', \%opts) or die;
+my $title = $opts{'t'};
+my $po_url = $opts{'U'} || 'po';
+
+my $everything;
+my $errors;
+
+my %languages = (
+    'af' => 'Afrikaans',
+    'cs' => 'Czech',
+    'de' => 'German',
+    'es' => 'Spanish',
+    'fa' => 'Farsi',
+    'fr' => 'French',
+    'hr' => 'Croatian',
+    'hu' => 'Hungarian',
+    'it' => 'Italian',
+    'ko' => 'Korean',
+    'nb' => 'Norwegian Bokm&#x00E5;l',
+    'nl' => 'Dutch',
+    'pl' => 'Polish',
+    'pt_BR' => 'Portuguese (Brazil)',
+    'ro' => 'Romanian',
+    'ru' => 'Russian',
+    'sk' => 'Slovak',
+    'sl' => 'Slovene',
+    'sv' => 'Swedish',
+    'ta' => 'Tamil',
+    'tr' => 'Turkish',
+    'zh_CN' => 'Chinese (simplified)',
+    'zh_TW' => 'Chinese (traditional)',
+);
+
+
+if (!@ARGV) {
+    die "gotta give me at least one file\n";
+}
+
+# read in counts
+
+my @catalogs;
+my %catalog_count;
+
+foreach (@ARGV) {
+    /(\w+).pot/ && do {
+	my $catname = $1;
+
+	push @catalogs, $catname;
+
+	my $tmp = `LC_ALL=C $msgfmt -o /dev/null -v $_ 2>&1`;
+	$tmp =~ /(\d+) untranslated/ and $catalog_count{$catname} = $1;
+
+	next;
+    };
+
+    /(\w+)-(\w+).po$/ || next;
+    my $catalogname = $1;
+    my $lang = $2;
+
+    my $tmp = `LC_ALL=C $msgfmt -o /dev/null -v $_ 2>&1`;
+    $tmp =~ /(\d+) translated/ and $everything->{"$catalogname"}{"$lang"} = $1;
+    if (-f "$_.err") {
+	$errors->{"$catalogname"}{"$lang"} = 1;
+    }
+}
+
+# compute all distinct languages available
+my @all_lang = ();
+
+foreach my $catalog (@catalogs) {
+    foreach my $lang (keys %{$everything->{$catalog}}) {
+	if (not grep($_ eq $lang, @all_lang)) {
+	    push @all_lang, $lang;
+	}
+    }
+}
+
+@all_lang = sort @all_lang;
+
+print "<h2>$title</h2>\n" if $title;
+print "<p>Last update: ".`date -u +'%Y-%m-%d %H:%M:%S'`." UTC</p>\n";
+
+print "<table border=\"1\" width=\"100%\" cellspacing=\"0\" cellpadding=\"1\">\n\n";
+print "<colgroup span=\"1\" width=\"0*\" />\n";
+print "<colgroup span=\"".scalar(@all_lang)."\" width=\"*\" />\n";
+print "<colgroup span=\"1\" width=\"0*\" />\n";
+print "<tr>\n";
+print "<th></th>\n";
+foreach (@all_lang) {
+    print "<th><abbr title=\"".($languages{$_} || '')."\">$_</abbr></th>\n";
+}
+print "<td align=\"center\">".scalar(@all_lang)."</td>\n";
+print "</tr>\n\n";
+
+my %langavg;
+
+foreach my $catalog (sort @catalogs) {
+    my @catavg;
+
+    print "<tr>\n";
+
+    print "<th align=\"left\">";
+    print "<a href=\"$po_url/$catalog.pot\">$catalog</a>";
+    print "<br /><small>(".$catalog_count{$catalog}." strings)</small>";
+    print "</th>\n";
+
+    foreach my $lang (@all_lang) {
+	print "<td align=\"center\">";
+	my $trans = $everything->{$catalog}{$lang};
+	if (defined $trans and $trans>0) {
+	    my $total = $catalog_count{$catalog};
+	    my $pct = floor($trans/$total * 100);
+	    printf "<a href=\"$po_url/$catalog-$lang.po\">%.0f</a>", $pct;
+
+	    push @{$langavg{"$lang"}}, $pct;
+	    push @catavg, $pct;
+
+	    if ($errors->{"$catalog"}{"$lang"}) {
+		print " <span class='error'>(<a href=\"$po_url/$catalog-$lang.po.err\">E</a>)</span>";
+	    }
+	} elsif ($errors->{"$catalog"}{"$lang"}) {
+	    print " <span class='error'>(<a href=\"$po_url/$catalog-$lang.po.err\">E</a>)</span>";
+	} else {
+	    print "&#x00A0;";
+	}
+	print "</td>\n";
+    }
+
+    print "<td align=\"center\">";
+    printf "%d", scalar(@catavg);
+    if (@catavg) {
+	printf " (%.0f)", floor(list_sum(@catavg)/scalar(@catavg));
+    }
+    print "</td>\n";
+
+    print "</tr>\n\n";
+}
+
+my @totalavg;
+print "<tr>\n";
+print "<td align=\"center\">". scalar(@catalogs) ."</td>\n";
+foreach my $lang (@all_lang) {
+    print "<td align=\"center\">";
+    if (@{$langavg{$lang}}) {
+	printf "%d (%.0f)", scalar(@{$langavg{$lang}}), floor(list_sum(@{$langavg{$lang}})/scalar(@{$langavg{$lang}}));
+	push @totalavg, @{$langavg{$lang}};
+    }
+    print "</td>\n";
+}
+
+print "<td align=\"center\">";
+printf "%d (%.0f)", scalar(@totalavg), floor(list_sum(@totalavg)/scalar(@totalavg));
+print "</td>\n";
+
+print "</tr>\n\n";
+
+print "</table>\n";
+
+
+
+sub list_sum {
+    my $total;
+    foreach (@_) {
+	$total += $_;
+    }
+    return $total;
+}

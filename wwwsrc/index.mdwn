@@ -1,0 +1,40 @@
+# PostgreSQL Translation Project
+
+This page contains some information about the PostgreSQL National
+Language Support effort.  Please read the [information about NLS in
+the PostgreSQL
+Documentation](http://developer.postgresql.org/docs/postgres/nls.html)
+for background and technical information.  Some of the information on
+this page may eventually be migrated there as it stabilizes.  There's
+also the [GNU Gettext
+Manual](http://www.gnu.org/manual/software/gettext/html_chapter/gettext_toc.html),
+which is only partially relevant for us, but it might be good to look
+at anyway.
+
+## Status
+
+The [[status]] tables shows which areas of the PostgreSQL source are
+prepared for translation, and the progress of those translations.
+There you can also download freshly baked PO files that are merged up
+against the latest program sources.  No PostgreSQL source tree is
+needed for translation work.
+
+
+## Communicating
+
+If you have any questions about the PostgreSQL translation project,
+including
+
+- you want to start a new translation or continue an existing one and
+  you want to avoid duplicating your work with someone else,
+
+- you're looking for other people who want to work with you on
+  translating,
+
+- you're having technical questions about tools, the source tree, the
+  meaning of terms, etc.,
+
+then write to the mailing list
+<pgtranslation-translators@pgfoundry.org>.  More information about our
+[mailing lists](http://pgfoundry.org/mail/?group_id=1000064) is
+available.

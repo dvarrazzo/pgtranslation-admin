@@ -1,0 +1,115 @@
+#!/bin/sh
+
+set -e
+set -x
+
+active_branches="current 8.3-branch 8.2-branch 8.1-branch 8.0-branch 7.4-branch"
+
+date
+
+me=$(basename $0)
+mydir=$(cd $(dirname $0) && pwd)
+topdir=$(cd $mydir && cd .. && pwd)
+
+PATH=$topdir:$mydir:$PATH
+
+GMAKE=$(which gmake || which make 2>/dev/null)
+export GMAKE
+
+cvsdir=$topdir/cvs
+statusdir=$topdir/status
+wwwsrcdir=$topdir/wwwsrc
+wwwbuilddir=$topdir/wwwbuild
+wwwinstalldir=$topdir/wwwinstall
+
+rm -rf $wwwbuilddir
+cp -R $wwwsrcdir $wwwbuilddir
+
+create_cvsco() {
+    local dir=$1
+    local prefix=$2
+    local branch=$3
+    local repo=$4
+    local module=$5
+
+    mkdir -p $dir
+    pushd $dir >/dev/null
+
+    tagname=`echo $branch | sed 's/\(.\)\.\(.\)-branch/REL\1_\2_STABLE/'`
+
+    trap 'rm -f $tmp; '"rm -rf $prefix-$branch" EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
+
+    if [ ! -d $prefix-$branch ]; then
+	touch FORCE-$branch
+	cvs -q -d $repo checkout -P $module
+	mv $module $prefix-$branch
+	if [ $branch != current ]; then
+	    tmp=`mktemp -t "$me"`
+	    pushd $prefix-$branch >/dev/null
+	    cvs -q update -d -P -r $tagname 2>$tmp || grep 'no such tag' "$tmp"
+	    popd >/dev/null
+	    rm "$tmp"
+	fi
+    fi
+
+    popd >/dev/null
+}
+
+
+[ $(ps x | grep $0 | grep -v grep | wc -l) -gt 2 ] && exit 77
+
+donesomething=false
+
+
+for branch in $active_branches; do
+    create_cvsco $cvsdir postgresql $branch :pserver:anoncvs@anoncvs.postgresql.org:/projects/cvsroot pgsql
+    create_cvsco $cvsdir messages $branch :pserver:anonymous@cvs.pgfoundry.org:/cvsroot/pgtranslation messages
+
+    tmp=`mktemp -t "$me"`
+    trap 'rm -f $tmp' EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
+
+    pushd $cvsdir/postgresql-$branch >/dev/null
+    test -f GNUmakefile && $GMAKE --silent maintainer-clean
+    cvs -q update | tee "$tmp"
+    popd >/dev/null
+
+    if [ -d "$cvsdir/messages-$branch" ]; then
+	(cd $cvsdir/messages-$branch; cvs -q update) | tee -a "$tmp"
+	cp-po $cvsdir/messages-$branch $cvsdir/postgresql-$branch
+    fi
+
+    if [ -f "$cvsdir/FORCE-$branch" ]; then
+	rm "$cvsdir/FORCE-$branch"
+    else
+	egrep -q '^(U|P) ' "$tmp" || rm -f "$tmp" && continue
+    fi
+
+    rm -f "$tmp"
+
+    pushd $cvsdir/postgresql-$branch
+    ./configure --enable-nls --without-readline --without-zlib --silent
+    popd
+
+    mkdir -p $statusdir/$branch/po
+    rm -rf $statusdir/$branch/po/*
+
+    files=`find $cvsdir/postgresql-$branch -name nls.mk`
+    pg-make-po -o $statusdir/$branch/po $files
+
+    mkdir -p $wwwbuilddir/statustables
+    nls-status-table -t "$(echo $branch | sed 's/^c/C/;s/-b/ B/')" -U statustables/po-$branch $statusdir/$branch/po/*.pot $statusdir/$branch/po/*.po >$wwwbuilddir/statustables/table-$branch.html
+
+    mkdir -p $wwwinstalldir/statustables
+    cp -R $statusdir/$branch/po $wwwinstalldir/statustables/po-$branch
+
+#    pg-make-conflicts $branch $topdir $wwwinstalldir
+
+    donesomething=true
+done
+
+date
+
+$donesomething || exit 77
+
+$GMAKE -C $wwwbuilddir all
+#rsync -L -r --delete $wwwinstalldir/ pgfoundry.org:/home/pgfoundry.org/groups/pgtranslation/htdocs/

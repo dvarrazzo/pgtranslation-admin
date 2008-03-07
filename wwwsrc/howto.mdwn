@@ -1,0 +1,57 @@
+# Howto
+
+Here is how to get set up for translation work.  It is assumed here
+that you already know your way around gettext message catalogs.  If
+you're new to this, read the chapter on NLS in the PostgreSQL
+Documentation.
+
+## Translating
+
+1. To continue an existing translation, download a new PO file by
+   following the links in the [[status]] tables.  Fill in the file as
+   much as you want.
+
+2. To start a new translation, download a POT file by clicking on one
+   of the catalog names in the left column of the [[status]] tables.
+   First, fill in all the fields in the header and remove the fuzzy
+   flag.  Particularly, the character set information is very
+   important and must not be left out!  Then fill in the rest of the
+   file as much as you want.
+
+3. When you are done editing, *check the file* for errors.  If you're
+   using the Emacs PO mode, press V.  From the command line, run
+   `msgfmt -o /dev/null -v -c yourfile.po`.  Or copy the file into the
+   main PostgreSQL source tree and run `gmake maintainer-check-po`.
+   If you don't do this, your file might contain bugs that cause
+   program crashes, which will quickly disenchant users from
+   PostgreSQL and internationalized software in general.
+
+4. Submit the resulting file to the [Patch
+   Tracker](http://pgfoundry.org/tracker/?atid=320&amp;group_id=1000064).
+   Please do not send patches; send the whole file.  If you're
+   concerned that the file is too big, run it through a compression
+   program.  Also, please send each PO file as a separate attachment;
+   no tar or zip archives please.  Both of these rules make it easier
+   for the person installing your files.
+
+## Tools
+
+Please don't edit the PO files with a plain text editor.  You're
+making your life unnecessarily hard.  There are several tools that
+make editing PO files really easy.
+
+- GNU Emacs and XEmacs have PO editing modes.
+
+- [KBabel](http://i18n.kde.org/tools/kbabel/) is for those who like
+  KDE-based tools.
+
+- [poEdit](http://poedit.sourceforge.net) is yet another tool, which
+  even works under Windows.
+
+## Tips
+
+Check out the home of the [GNU Translation
+Project](http://www.iro.umontreal.ca/contrib/po/HTML/).  There you can
+find out about mailing lists, web sites, and other resources for
+translation efforts to your language.  Some of these resources are
+GNU-oriented, but others are not.

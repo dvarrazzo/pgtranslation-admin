@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+branch=$1
+MYDIR=$2
+WEBDIR=$3
+
+export PYTHONPATH=$MYDIR/usr/lib/python2.4/site-packages/
+
+for langdir in $MYDIR/cvs/messages-$branch/*; do
+	lang=$(basename $langdir)
+	[ $lang = CVS ] && continue
+
+	for mode in '' 'invert'; do
+		outdir=$WEBDIR/conflicts/$branch/$lang${mode:+"@$mode"}
+		mkdir -p $outdir
+		rm -f $outdir/*.po
+		$MYDIR/usr/bin/poconflicts ${mode:+"--$mode"} $MYDIR/cvs/messages-$branch/$lang/*.po $outdir || :
+		rmdir -p $outdir || :
+	done
+done
