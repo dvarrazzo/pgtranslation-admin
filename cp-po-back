@@ -34,6 +34,7 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 	if ! [ -e $targetfile ] || ! diff $srcfile $targetfile >/dev/null; then
 		[ -e $targetfile ] || new="$new $lang/$srccat.po"
 		echo " cp $srcfile $targetfile"
+		mkdir -p $(dirname $targetfile)
 		cp $srcfile $targetfile
 	fi
 done
