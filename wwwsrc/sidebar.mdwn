@@ -1,5 +1,0 @@
-- [[Index]]
-- [[Status]]
-- [[Howto]]
-- [[Contributing]]
-- [PgFoundry site](http://www.pgfoundry.org/projects/pgtranslation/)
