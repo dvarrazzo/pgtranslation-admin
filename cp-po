@@ -63,6 +63,7 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 			fi
 			if [ ! -e $targetfile ] || ! diff -I '\(\$Header\|pgtranslation Id\|\$Id\|\$PostgreSQL\).*\$' $srcfile $targetfile >/dev/null; then
 				echo " $srcfile --> $targetfile"
+				mkdir -p $(dirname $targetfile)
 				$run && { cat $srcfile | sed 's/^\(# *\)$Id/\1pgtranslation Id/' >$targetfile; chmod 644 $targetfile; }
 			fi
 		fi
