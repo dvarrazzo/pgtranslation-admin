@@ -1,0 +1,109 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $dir = $ARGV[0] || '.';
+
+print <<_EOF_;
+<?xml version='1.0'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+h1 { color: #EC5800; }
+h2 { border-bottom: solid 10px #0092C3; }
+a { color: #0092C3; }
+.newpo { color: #666; visibility: visible; }
+</style>
+<script type="text/javascript">
+function getStyleClass (className) {
+	for (var s = 0; s < document.styleSheets.length; s++)
+	{
+		if(document.styleSheets[s].rules)
+		{
+			for (var r = 0; r < document.styleSheets[s].rules.length; r++)
+			{
+				if (document.styleSheets[s].rules[r].selectorText == '.' + className)
+				{
+					return document.styleSheets[s].rules[r];
+				}
+			}
+		}
+		else if(document.styleSheets[s].cssRules)
+		{
+			for (var r = 0; r < document.styleSheets[s].cssRules.length; r++)
+			{
+				if (document.styleSheets[s].cssRules[r].selectorText == '.' + className)
+					return document.styleSheets[s].cssRules[r];
+			}
+		}
+	}
+	
+	return null;
+}
+
+</script>
+<title>NLS Status Tables</title>
+</head>
+
+<body>
+<h1>NLS Status Tables</h1>
+
+<p>The tables below shows which areas of the PostgreSQL source are prepared 
+for translation, and the progress of those translations. The numbers are 
+percents of translated messages. By following the links, you can download 
+freshly baked PO files that are merged up against the latest program sources. 
+No PostgreSQL source tree is needed for translation work.</p>
+
+<p>The grey numbers are translations that do not exist yet, but where this
+web site has initialized the translations files for you with data from the
+existing translations for the same language.</p>
+
+<p>You can work in several branches. Please follow the rumors on the hackers 
+list about when a branch is about to be released. Also note that working on 
+the current branch might on occasion be a waste of time if some developer is 
+planning to rewrite most of the message handling, for example. Please check on 
+the hackers list first. When you submit updates, please specify the 
+branch.</p>
+
+<ul>
+_EOF_
+
+my @branches = map { m!table-([^/]+).html$! && $1 } reverse sort glob("$dir/table-*.html");
+
+my ($b, $title);
+
+foreach $b (@branches) {
+    ($title = $b) =~ tr/-/ /;
+    print "<li><a href='#t${b}-branch'>$title</a></li>\n";
+}
+
+print <<_EOF_;
+</ul>
+
+<p>Other information:
+<a href="http://wiki.postgresql.org/wiki/NLS">contributor/translator information (wiki)</a> |
+<a href="http://www.pgfoundry.org/projects/pgtranslation/">PgFoundry project</a>
+</p>
+
+<p>Display options:
+<a href="#" onclick="javascript:getStyleClass('newpo').style.visibility = 'visible';">show new</a> |
+<a href="#" onclick="javascript:getStyleClass('newpo').style.visibility = 'hidden';">hide new</a>
+</p>
+_EOF_
+
+foreach $b (@branches) {
+    ($title = $b) =~ tr/-/ /;
+    print "<h2><a name='t${b}-branch'></a>", ucfirst($title), "</h2>\n";
+
+    open F, "$dir/table-${b}.html" or die $!;
+    print foreach <F>;
+    close F;
+}
+
+print <<_EOF_;
+</body>
+</html>
+_EOF_

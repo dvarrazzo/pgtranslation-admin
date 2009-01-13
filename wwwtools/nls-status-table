@@ -9,43 +9,15 @@ use strict;
 use File::Basename;
 use Getopt::Std;
 use POSIX qw(:math_h);
-
-my $msgfmt = $ENV{'MSGFMT'} || 'msgfmt';
+use I18N::LangTags::List;
 
 my %opts;
-getopts('t:U:', \%opts) or die;
-my $title = $opts{'t'};
+getopts('U:', \%opts) or die;
 my $po_url = $opts{'U'} || 'po';
 
 my $everything;
 my $errors;
-
-my %languages = (
-    'af' => 'Afrikaans',
-    'cs' => 'Czech',
-    'de' => 'German',
-    'es' => 'Spanish',
-    'fa' => 'Farsi',
-    'fr' => 'French',
-    'hr' => 'Croatian',
-    'hu' => 'Hungarian',
-    'it' => 'Italian',
-    'ko' => 'Korean',
-    'nb' => 'Norwegian Bokm&#x00E5;l',
-    'nl' => 'Dutch',
-    'pl' => 'Polish',
-    'pt_BR' => 'Portuguese (Brazil)',
-    'ro' => 'Romanian',
-    'ru' => 'Russian',
-    'sk' => 'Slovak',
-    'sl' => 'Slovene',
-    'sv' => 'Swedish',
-    'ta' => 'Tamil',
-    'tr' => 'Turkish',
-    'zh_CN' => 'Chinese (simplified)',
-    'zh_TW' => 'Chinese (traditional)',
-);
-
+my $new;
 
 if (!@ARGV) {
     die "gotta give me at least one file\n";
@@ -62,17 +34,18 @@ foreach (@ARGV) {
 
 	push @catalogs, $catname;
 
-	my $tmp = `LC_ALL=C $msgfmt -o /dev/null -v $_ 2>&1`;
+	my $tmp = `LC_ALL=C msgfmt -o /dev/null -v $_ 2>&1`;
 	$tmp =~ /(\d+) untranslated/ and $catalog_count{$catname} = $1;
 
 	next;
     };
 
-    /(\w+)-(\w+).po$/ || next;
+    /(\w+)-(\w+).po(\.new)?/ || next;
     my $catalogname = $1;
     my $lang = $2;
+    $new->{$catalogname}{$lang} = 1 if $3;
 
-    my $tmp = `LC_ALL=C $msgfmt -o /dev/null -v $_ 2>&1`;
+    my $tmp = `LC_ALL=C msgfmt -o /dev/null -v $_ 2>&1`;
     $tmp =~ /(\d+) translated/ and $everything->{"$catalogname"}{"$lang"} = $1;
     if (-f "$_.err") {
 	$errors->{"$catalogname"}{"$lang"} = 1;
@@ -92,7 +65,7 @@ foreach my $catalog (@catalogs) {
 
 @all_lang = sort @all_lang;
 
-print "<h2>$title</h2>\n" if $title;
+print "<div>\n";
 print "<p>Last update: ".`date -u +'%Y-%m-%d %H:%M:%S'`." UTC</p>\n";
 
 print "<table border=\"1\" width=\"100%\" cellspacing=\"0\" cellpadding=\"1\">\n\n";
@@ -102,7 +75,9 @@ print "<colgroup span=\"1\" width=\"0*\" />\n";
 print "<tr>\n";
 print "<th></th>\n";
 foreach (@all_lang) {
-    print "<th><abbr title=\"".($languages{$_} || '')."\">$_</abbr></th>\n";
+    my $c;
+    ($c = $_) =~ tr/_/-/;
+    print "<th><abbr title=\"".(I18N::LangTags::List::name($c) || '')."\">$_</abbr></th>\n";
 }
 print "<td align=\"center\">".scalar(@all_lang)."</td>\n";
 print "</tr>\n\n";
@@ -125,10 +100,14 @@ foreach my $catalog (sort @catalogs) {
 	if (defined $trans and $trans>0) {
 	    my $total = $catalog_count{$catalog};
 	    my $pct = floor($trans/$total * 100);
-	    printf "<a href=\"$po_url/$catalog-$lang.po\">%.0f</a>", $pct;
+	    if (!$new->{$catalog}{$lang}) {
+	        printf "<a href=\"$po_url/$catalog-$lang.po\">%.0f</a>", $pct;
 
-	    push @{$langavg{"$lang"}}, $pct;
-	    push @catavg, $pct;
+	        push @{$langavg{"$lang"}}, $pct;
+	        push @catavg, $pct;
+	    } else {
+		printf "<a class='newpo' href=\"$po_url/$catalog-$lang.po.new\">%.0f</a>", $pct;
+	    }
 
 	    if ($errors->{"$catalog"}{"$lang"}) {
 		print " <span class='error'>(<a href=\"$po_url/$catalog-$lang.po.err\">E</a>)</span>";
@@ -170,6 +149,7 @@ print "</td>\n";
 print "</tr>\n\n";
 
 print "</table>\n";
+print "</div>\n";
 
 
 
