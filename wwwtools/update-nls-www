@@ -70,4 +70,4 @@ fi
 $MYDIR/nls-status-page $WEBDIR > $WEBDIR/status.html
 (cd $WEBDIR && ln -fs status.html index.html)
 
-#rsync -L -r --delete $WEBDIR/ pgfoundry.org:/home/pgfoundry.org/groups/pgtranslation/htdocs/
+rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ pgfoundry.org:/home/pgfoundry.org/groups/pgtranslation/htdocs/
