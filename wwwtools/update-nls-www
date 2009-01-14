@@ -1,8 +1,12 @@
 #! /usr/local/bin/bash
-set -ex
 shopt -s nullglob
 
-date
+echo "================="
+echo "NLS update starts"
+echo "================="
+date -u
+
+set -ex
 
 MYDIR=$(cd $(dirname $0) && pwd)
 WEBDIR=$MYDIR/../../htdocs
