@@ -9,7 +9,7 @@ date -u
 set -ex
 
 MYDIR=$(cd $(dirname $0) && pwd)
-WEBDIR=$MYDIR/../../htdocs
+WEBDIR=$MYDIR/../../htwork
 CVSDIR=$(cd $MYDIR/../../cvs && pwd)
 
 active_branches="current 8.3-branch 8.2-branch 8.1-branch 8.0-branch 7.4-branch"
@@ -23,8 +23,6 @@ lock="$PWD/lock"
 test -e "$lock" && exit 77
 trap 'rm -f $tmp $lock' EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
 touch "$lock"
-
-donesomething=false
 
 for branch in $active_branches; do
 	tmp=`mktemp -t "$me"`
@@ -62,16 +60,8 @@ for branch in $active_branches; do
 
 #	$MYDIR/pg-make-conflicts $branch $MYDIR $WEBDIR
 
-	donesomething=true
+	$MYDIR/nls-status-page $WEBDIR > $WEBDIR/index.html
+	rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ ~/htdocs/
 done
 
 date
-
-if ! $donesomething; then
-	exit 77
-fi
-
-$MYDIR/nls-status-page $WEBDIR > $WEBDIR/status.html
-(cd $WEBDIR && ln -fs status.html index.html)
-
-rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ pgfoundry.org:/home/pgfoundry.org/groups/pgtranslation/htdocs/
