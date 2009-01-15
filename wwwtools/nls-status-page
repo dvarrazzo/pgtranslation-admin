@@ -19,11 +19,11 @@ a { color: #0092C3; }
 </style>
 <script type="text/javascript">
 function getStyleClass (className) {
-	for (var s = 0; s &lt; document.styleSheets.length; s++)
+	for (var s = 0; document.styleSheets.length > s; s++)
 	{
 		if(document.styleSheets[s].rules)
 		{
-			for (var r = 0; r &lt; document.styleSheets[s].rules.length; r++)
+			for (var r = 0; document.styleSheets[s].rules.length > r; r++)
 			{
 				if (document.styleSheets[s].rules[r].selectorText == '.' + className)
 				{
@@ -33,7 +33,7 @@ function getStyleClass (className) {
 		}
 		else if(document.styleSheets[s].cssRules)
 		{
-			for (var r = 0; r &lt; document.styleSheets[s].cssRules.length; r++)
+			for (var r = 0; document.styleSheets[s].cssRules.length > r; r++)
 			{
 				if (document.styleSheets[s].cssRules[r].selectorText == '.' + className)
 					return document.styleSheets[s].cssRules[r];
@@ -89,8 +89,8 @@ print <<_EOF_;
 </p>
 
 <p>Display options:
-<a onclick="javascript:getStyleClass('newpo').style.visibility = 'visible';">show new</a> |
-<a onclick="javascript:getStyleClass('newpo').style.visibility = 'hidden';">hide new</a>
+<a href='' onclick="javascript:getStyleClass('newpo').style.visibility = 'visible';">show new</a> |
+<a href='' onclick="javascript:getStyleClass('newpo').style.visibility = 'hidden';">hide new</a>
 </p>
 _EOF_
 
