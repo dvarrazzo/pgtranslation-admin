@@ -12,13 +12,15 @@ set -e
 
 me=$(basename $0)
 
+adjustcvskeywords=true
 run=true
 
-TEMP=$(getopt n "$@")
+TEMP=$(getopt kn "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
+		-k)	adjustcvskeywords=false; shift;;
 		-n)	run=false; shift;;
 		--)	shift; break;;
 	esac
@@ -64,7 +66,14 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 			if [ ! -e $targetfile ] || ! diff -I '\(\$Header\|pgtranslation Id\|\$Id\|\$PostgreSQL\).*\$' $srcfile $targetfile >/dev/null; then
 				echo " $srcfile --> $targetfile"
 				mkdir -p $(dirname $targetfile)
-				$run && { cat $srcfile | sed 's/^\(# *\)$Id/\1pgtranslation Id/' >$targetfile; chmod 644 $targetfile; }
+				if $run; then
+					if $adjustcvskeywords; then
+						cat $srcfile | sed 's/^\(# *\)$Id/\1pgtranslation Id/' >$targetfile
+					else
+						cp $srcfile $targetfile
+					fi
+					chmod 644 $targetfile
+				fi
 			fi
 		fi
 	done
