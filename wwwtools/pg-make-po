@@ -70,15 +70,17 @@ foreach (@ARGV) {
         if (! -f "$dirname/po/$lang.po.new") {
             # merge failed, proceed with old file
             system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po") if (-f "$dirname/po/$lang.po");
+            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po.old") if (-f "$dirname/po/$lang.po");
         } elsif (-f "$dirname/po/$lang.po") {
             # existing po file merged
             system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
+            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po.old");
             if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
 	        system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
         } else {
             # nonexisting po file merged
-            system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po.new");
+            system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
         }
     } # foreach $lang
 } # foreach @ARGV

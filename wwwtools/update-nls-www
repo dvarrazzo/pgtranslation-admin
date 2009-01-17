@@ -56,7 +56,7 @@ for branch in $active_branches; do
 	files=`find $PGSRC -name nls.mk`
 	$MYDIR/pg-make-po -o $WEBDIR/po-$branch -v $branch $files
 
-	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch *.pot *.po *.po.new >$WEBDIR/table-$branch.html)
+	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch *.pot *.po >$WEBDIR/table-$branch.html)
 
 #	$MYDIR/pg-make-conflicts $branch $MYDIR $WEBDIR
 

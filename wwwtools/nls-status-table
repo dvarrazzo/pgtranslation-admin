@@ -40,12 +40,17 @@ foreach (@ARGV) {
 	next;
     };
 
-    /(\w+)-(\w+).po(\.new)?/ || next;
+    /(\w+)-(\w+).po/ || next;
     my $catalogname = $1;
     my $lang = $2;
-    $new->{$catalogname}{$lang} = 1 if $3;
 
-    my $tmp = `LC_ALL=C msgfmt -o /dev/null -v $_ 2>&1`;
+    my $tmp;
+    if (-e "$_.old") {
+	$tmp = `LC_ALL=C msgfmt -o /dev/null -v $_.old 2>&1`;
+    } else {
+	$tmp = `LC_ALL=C msgfmt -o /dev/null -v $_ 2>&1`;
+	$new->{$catalogname}{$lang} = 1;
+    }
     $tmp =~ /(\d+) translated/ and $everything->{"$catalogname"}{"$lang"} = $1;
     if (-f "$_.err") {
 	$errors->{"$catalogname"}{"$lang"} = 1;
@@ -106,7 +111,7 @@ foreach my $catalog (sort @catalogs) {
 	        push @{$langavg{"$lang"}}, $pct;
 	        push @catavg, $pct;
 	    } else {
-		printf "<a class='newpo' href=\"$po_url/$catalog-$lang.po.new\">%.0f</a>", $pct;
+		printf "<a class='newpo' href=\"$po_url/$catalog-$lang.po\">%.0f</a>", $pct;
 	    }
 
 	    if ($errors->{"$catalog"}{"$lang"}) {
