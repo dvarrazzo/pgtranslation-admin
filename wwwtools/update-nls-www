@@ -49,7 +49,7 @@ for branch in $active_branches; do
 	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib
 	popd
 
-	# remove old data in case in contained garbage
+	# remove old data in case it contained garbage
 	rm -rf $WEBDIR/po-$branch $WEBDIR/table-$branch.html
 
 	mkdir -p $WEBDIR/po-$branch
