@@ -1,4 +1,4 @@
-#! /usr/local/bin/bash
+#! /usr/bin/env bash
 shopt -s nullglob
 
 echo "================="
@@ -11,6 +11,10 @@ set -ex
 MYDIR=$(cd $(dirname $0) && pwd)
 WEBDIR=$MYDIR/../../htwork
 CVSDIR=$(cd $MYDIR/../../cvs && pwd)
+
+GMAKE=make
+which gmake >/dev/null && GMAKE=gmake
+export GMAKE
 
 active_branches="current 8.3-branch 8.2-branch 8.1-branch 8.0-branch 7.4-branch"
 
@@ -25,12 +29,12 @@ trap 'rm -f $tmp $lock' EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
 touch "$lock"
 
 for branch in $active_branches; do
-	tmp=`mktemp -t "$me"`
+	tmp=`mktemp`
 
 	PGSRC=$CVSDIR/postgresql-$branch
 
 	pushd $PGSRC
-	test -f GNUmakefile && gmake maintainer-clean
+	test -f GNUmakefile && $GMAKE maintainer-clean
 	cvs -q update | tee "$tmp"
 	popd
 
