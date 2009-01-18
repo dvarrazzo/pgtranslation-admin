@@ -57,30 +57,36 @@ foreach (@ARGV) {
     foreach $lang (@all_languages) {
 	print STDERR "$lang: ";
 
-        if ($version eq 'current') {
-	    if (system("$gmake -C $dirname po/$lang.po.new") != 0) {
-                system("$gmake -C $dirname po/$lang.po.new 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
-            }
-        } elsif (-f "$dirname/po/$lang.po") {
-            if (system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.new") != 0) {
-                system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.new 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+        if (-f "$dirname/po/$lang.po") {
+            # This is what the use to calcuate the displayed percentages.
+            if (system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg") != 0) {
+                system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
         }
 
-        if (! -f "$dirname/po/$lang.po.new") {
-            # merge failed, proceed with old file
-            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po") if (-f "$dirname/po/$lang.po");
-            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po.old") if (-f "$dirname/po/$lang.po");
-        } elsif (-f "$dirname/po/$lang.po") {
-            # existing po file merged
-            system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
-            system("cp $dirname/po/$lang.po $outdir/$catalogname-$lang.po.old");
-            if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
-	        system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+        if ($version eq 'current') {
+            # This is what we offer for download.
+	    if (system("$gmake -C $dirname po/$lang.po.new") != 0) {
+                system("$gmake -C $dirname po/$lang.po.new 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
-        } else {
-            # nonexisting po file merged
+        }
+
+        if (-f "$dirname/po/$lang.po.mrg" && ! -f "$dirname/po/$lang.po.new") {
+            system("cp $dirname/po/$lang.po.mrg $outdir/$catalogname-$lang.po");
+            system("cp $dirname/po/$lang.po.mrg $outdir/$catalogname-$lang.po.old");
+        }
+
+        if (-f "$dirname/po/$lang.po.mrg" && -f "$dirname/po/$lang.po.new") {
             system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
+            system("cp $dirname/po/$lang.po.mrg $outdir/$catalogname-$lang.po.old");
+        }
+
+        if (! -f "$dirname/po/$lang.po.mrg" && -f "$dirname/po/$lang.po.new") {
+            system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
+        }
+
+        if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
+	    system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
         }
     } # foreach $lang
 } # foreach @ARGV
