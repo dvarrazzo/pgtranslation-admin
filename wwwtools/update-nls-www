@@ -6,6 +6,8 @@ echo "NLS update starts"
 echo "================="
 date -u
 
+me=$(basename $0)
+
 set -ex
 
 MYDIR=$(cd $(dirname $0) && pwd)
@@ -29,7 +31,7 @@ trap 'rm -f $tmp $lock' EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
 touch "$lock"
 
 for branch in $active_branches; do
-	tmp=`mktemp`
+	tmp=`mktemp /tmp/$me.XXXXXX`
 
 	PGSRC=$CVSDIR/postgresql-$branch
 
