@@ -4,7 +4,7 @@ shopt -s nullglob
 echo "================="
 echo "NLS update starts"
 echo "================="
-date -u
+date -u +%FT%T
 
 me=$(basename $0)
 
@@ -70,4 +70,4 @@ for branch in $active_branches; do
 	rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ ~/htdocs/
 done
 
-date
+date -u +%FT%T
