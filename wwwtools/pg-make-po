@@ -53,6 +53,9 @@ foreach (@ARGV) {
 
     system("$gmake -C $dirname init-po") == 0 or die "$!\n";
     system("cp -f $dirname/po/$catalogname.pot $outdir/$catalogname.pot") == 0 or die "$!\n";
+
+    my $avail_languages = join(' ', map { m!/([^/]+)\.po$! && $1 } glob("$dirname/po/*.po"));
+
     print STDERR "* $catalogname\n";
     foreach $lang (@all_languages) {
 	print STDERR "$lang: ";
@@ -66,8 +69,8 @@ foreach (@ARGV) {
 
         if ($version eq 'current') {
             # This is what we offer for download.
-	    if (system("$gmake -C $dirname po/$lang.po.new") != 0) {
-                system("$gmake -C $dirname po/$lang.po.new 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+	    if (system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages'") != 0) {
+                system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages' 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
         }
 
