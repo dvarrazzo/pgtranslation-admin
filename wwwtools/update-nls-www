@@ -52,7 +52,8 @@ for branch in $active_branches; do
 	rm -f "$tmp"
 
 	pushd $PGSRC
-	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib
+	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib \
+		--with-perl --with-tcl
 	popd
 
 	# remove old data in case it contained garbage
