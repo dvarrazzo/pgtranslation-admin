@@ -23,6 +23,45 @@ my $gmake = $ENV{'GMAKE'} || 'gmake';
 my $msgmerge = $ENV{'MSGMERGE'} || 'msgmerge';
 my $msgfmt = $ENV{'MSGFMT'} || 'msgfmt';
 
+# order as in the GNU gettext manual
+my %plural_rules = {
+    'ja' => 'nplurals=1; plural=0;',
+    'en' => 'nplurals=2; plural=n != 1;',
+    'fr' => 'nplurals=2; plural=n>1;',
+    'ro' => 'nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;',
+    'ru' => 'nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;',
+    'cs' => 'nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;',
+    'pl' => 'nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;',
+    'sl' => 'nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;',
+};
+
+my %plural_forms = {
+    'af' => 'en',
+    'cs' => 'cs',
+    'de' => 'en',
+    'es' => 'en',
+    'fa' => 'ja',
+    'fr' => 'fr',
+    'hr' => 'ru',
+    'hu' => 'en',
+    'it' => 'en',
+    'ja' => 'ja',
+    'ko' => 'ja',
+    'nb' => 'en',
+    'nl' => 'en',
+    'pl' => 'pl',
+    'pt_BR' => 'fr',
+    'ro' => 'ro',
+    'ru' => 'ru',
+    'sk' => 'cs',
+    'sl' => 'sl',
+    'sv' => 'en',
+    'ta' => 'en',
+    'tr' => 'ja',
+    'zh_CN' => 'ja',
+    'zh_TW' => 'ja',
+};
+
 my @all_languages;
 
 foreach (@ARGV) {
@@ -85,7 +124,8 @@ foreach (@ARGV) {
         }
 
         if (! -f "$dirname/po/$lang.po.mrg" && -f "$dirname/po/$lang.po.new") {
-            system("cp $dirname/po/$lang.po.new $outdir/$catalogname-$lang.po");
+            my $pe = $plural_rules{$plural_forms{$lang}};
+            system("cat $dirname/po/$lang.po.new | sed '/Plural-Forms:/s/nplurals=INTEGER; plural=EXPRESSION;/$pe/' >$outdir/$catalogname-$lang.po");
         }
 
         if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
