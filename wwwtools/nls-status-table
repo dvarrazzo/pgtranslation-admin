@@ -11,6 +11,8 @@ use Getopt::Std;
 use POSIX qw(:math_h);
 use I18N::LangTags::List;
 
+our $QUALIFIED_CUTOFF = 80;
+
 my %opts;
 getopts('U:', \%opts) or die;
 my $po_url = $opts{'U'} || 'po';
@@ -65,6 +67,10 @@ foreach my $catalog (@catalogs) {
 	if (not grep($_ eq $lang, @all_lang)) {
 	    push @all_lang, $lang;
 	}
+
+        # Convert count to percentage here; can't do it above in case we
+        # hadn't seen the pot file yet.
+        $everything->{$catalog}{$lang} = floor($everything->{$catalog}{$lang}/$catalog_count{$catalog} * 100);
     }
 }
 
@@ -100,11 +106,12 @@ foreach my $catalog (sort @catalogs) {
     print "</th>\n";
 
     foreach my $lang (@all_lang) {
-	print "<td align=\"center\">";
-	my $trans = $everything->{$catalog}{$lang};
-	if (defined $trans and $trans>0) {
-	    my $total = $catalog_count{$catalog};
-	    my $pct = floor($trans/$total * 100);
+	my $pct = $everything->{$catalog}{$lang};
+	print "<td align=\"center\"";
+	print " class='qualifiedpo'" if (defined $pct and $pct >= $QUALIFIED_CUTOFF and !$errors->{"$catalog"}{"$lang"});
+	print ">";
+
+	if (defined $pct and $pct > 0) {
 	    if (!$new->{$catalog}{$lang}) {
 	        printf "<a href=\"$po_url/$catalog-$lang.po\">%.0f</a>", $pct;
 

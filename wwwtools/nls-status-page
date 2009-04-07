@@ -16,6 +16,7 @@ h1 { color: #EC5800; }
 h2 { border-bottom: solid 10px #0092C3; }
 a { color: #0092C3; }
 .newpo { color: #666; visibility: visible; }
+.qualifiedpo { background-color: #00FF00; }
 </style>
 <script type="text/javascript">
 function getStyleClass (className) {
