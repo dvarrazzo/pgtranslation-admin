@@ -58,19 +58,30 @@ percents of translated messages. By following the links, you can download
 freshly baked PO files that are merged up against the latest program sources. 
 No PostgreSQL source tree is needed for translation work.</p>
 
+<p>The <span class='qualifiedpo'>highlighted</span> boxes are the files that 
+have translated a sufficient fraction of strings to be considered for release.  
+All other files will not be part of the PostgreSQL release.</p>
+
 <p>The grey numbers are translations that do not exist yet, but where this
 web site has initialized the translations files for you with data from the
 existing translations for the same language.</p>
 
-<p>You can work in several branches. Please follow the rumors on the hackers 
-list about when a branch is about to be released. Also note that working on 
-the current branch might on occasion be a waste of time if some developer is 
-planning to rewrite most of the message handling, for example. Please check on 
-the hackers list first. When you submit updates, please specify the 
-branch.</p>
+<p>You can work in several branches. Please see the status information below 
+and follow the announcements on the <a 
+href="http://lists.pgfoundry.org/pipermail/pgtranslation-translators/">mailing 
+list</a> about when a branch is about to be released.</p>
 
 <ul>
 _EOF_
+
+my %branch_status = (
+    '7.4-branch' => 'maintenance',
+    '8.0-branch' => 'maintenance',
+    '8.1-branch' => 'maintenance',
+    '8.2-branch' => 'maintenance',
+    '8.3-branch' => 'maintenance',
+    'current' => 'translate here, prepare for 8.4 beta and releases',
+);
 
 my @branches = map { m!table-([^/]+).html$! && $1 } reverse sort glob("$dir/table-*.html");
 
@@ -78,7 +89,7 @@ my ($b, $title);
 
 foreach $b (@branches) {
     ($title = $b) =~ tr/-/ /;
-    print "<li><a href='#t${b}-branch'>$title</a></li>\n";
+    print "<li><a href='#t${b}-branch'>$title</a></li> &mdash; $branch_status{$b}\n";
 }
 
 print <<_EOF_;
