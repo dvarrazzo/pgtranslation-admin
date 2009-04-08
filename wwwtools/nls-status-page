@@ -89,7 +89,7 @@ my ($b, $title);
 
 foreach $b (@branches) {
     ($title = $b) =~ tr/-/ /;
-    print "<li><a href='#t${b}-branch'>$title</a></li> &mdash; $branch_status{$b}\n";
+    print "<li><a href='#t${b}-branch'>$title</a> &mdash; $branch_status{$b}</li>\n";
 }
 
 print <<_EOF_;
