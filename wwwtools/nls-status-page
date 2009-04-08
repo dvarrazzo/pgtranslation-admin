@@ -59,7 +59,7 @@ freshly baked PO files that are merged up against the latest program sources.
 No PostgreSQL source tree is needed for translation work.</p>
 
 <p>The <span class='qualifiedpo'>highlighted</span> boxes are the files that 
-have translated a sufficient fraction of strings to be considered for release.  
+have a sufficient fraction of strings translated to be considered for release.  
 All other files will not be part of the PostgreSQL release.</p>
 
 <p>The grey numbers are translations that do not exist yet, but where this
