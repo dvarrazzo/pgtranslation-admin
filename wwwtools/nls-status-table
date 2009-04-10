@@ -108,7 +108,11 @@ foreach my $catalog (sort @catalogs) {
     foreach my $lang (@all_lang) {
 	my $pct = $everything->{$catalog}{$lang};
 	print "<td align=\"center\"";
-	print " class='qualifiedpo'" if (defined $pct and $pct >= $QUALIFIED_CUTOFF and !$errors->{"$catalog"}{"$lang"});
+        if (defined $pct and $pct == 100 and !$errors->{"$catalog"}{"$lang"}) {
+	    print " class='fullpo'" 
+        } elsif (defined $pct and $pct >= $QUALIFIED_CUTOFF and !$errors->{"$catalog"}{"$lang"}) }
+	    print " class='qualifiedpo'";
+        }
 	print ">";
 
 	if (defined $pct and $pct > 0) {

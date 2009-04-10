@@ -16,7 +16,8 @@ h1 { color: #EC5800; }
 h2 { border-bottom: solid 10px #0092C3; }
 a { color: #0092C3; }
 .newpo { color: #666; visibility: visible; }
-.qualifiedpo { background-color: #00FF00; }
+.qualifiedpo { background-color: #FFFF00; }
+.fullpo { background-color: #00FF00; }
 </style>
 <script type="text/javascript">
 function getStyleClass (className) {
@@ -59,8 +60,9 @@ freshly baked PO files that are merged up against the latest program sources.
 No PostgreSQL source tree is needed for translation work.</p>
 
 <p>The <span class='qualifiedpo'>highlighted</span> boxes are the files that 
-have a sufficient fraction of strings translated to be considered for release.  
-All other files will not be part of the PostgreSQL release.</p>
+have a sufficient fraction of strings translated to be considered for release. 
+Files that are <span class='fullpo'>100%</span> translated are specially 
+highlighted. All other files will not be part of the PostgreSQL release.</p>
 
 <p>The grey numbers are translations that do not exist yet, but where this
 web site has initialized the translations files for you with data from the
@@ -100,10 +102,12 @@ print <<_EOF_;
 <a href="http://www.pgfoundry.org/projects/pgtranslation/">PgFoundry project</a>
 </p>
 
+<!-- FIXME:
 <p>Display options:
 <a href='' onclick="javascript:getStyleClass('newpo').style.visibility = 'visible';">show new</a> |
 <a href='' onclick="javascript:getStyleClass('newpo').style.visibility = 'hidden';">hide new</a>
 </p>
+-->
 _EOF_
 
 foreach $b (@branches) {
