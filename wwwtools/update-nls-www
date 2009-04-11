@@ -36,8 +36,6 @@ for branch in $active_branches; do
 	PGSRC=$CVSDIR/postgresql-$branch
 
 	pushd $PGSRC
-	test -f GNUmakefile && $GMAKE maintainer-clean
-	rm $(find . -name '*.po.new' -or -name '*.po.mrg' -or -name '.#*')
 	cvs -q update | tee "$tmp"
 	if egrep -q '^C ' "$tmp"; then
 		rm $(sed -n 's/^C //p' "$tmp")
@@ -45,9 +43,12 @@ for branch in $active_branches; do
 	fi
 	popd
 
+	rm -rf $PGSRC.work
+	cp -R $PGSRC $PGSRC.work
+
 	if [ -d "$CVSDIR/messages-$branch" ]; then
 		(cd $CVSDIR/messages-$branch; cvs -q update) | tee -a "$tmp"
-		$MYDIR/../cp-po -k $CVSDIR/messages-$branch $CVSDIR/postgresql-$branch
+		$MYDIR/../cp-po -k $CVSDIR/messages-$branch $PGSRC.work
 	fi
 
 	if [ "$force" != true ] && ! egrep -q '^(U|P) ' "$tmp"; then
@@ -56,7 +57,7 @@ for branch in $active_branches; do
 
 	rm -f "$tmp"
 
-	pushd $PGSRC
+	pushd $PGSRC.work
 	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib \
 		--with-perl --with-tcl
 	popd
@@ -65,7 +66,7 @@ for branch in $active_branches; do
 	rm -rf $WEBDIR/po-$branch $WEBDIR/table-$branch.html
 
 	mkdir -p $WEBDIR/po-$branch
-	files=`find $PGSRC -name nls.mk`
+	files=`find $PGSRC.work -name nls.mk`
 	$MYDIR/pg-make-po -o $WEBDIR/po-$branch -v $branch $files
 
 	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch *.pot *.po >$WEBDIR/table-$branch.html)
