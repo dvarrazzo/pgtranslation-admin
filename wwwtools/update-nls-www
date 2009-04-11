@@ -38,6 +38,10 @@ for branch in $active_branches; do
 	pushd $PGSRC
 	test -f GNUmakefile && $GMAKE maintainer-clean
 	cvs -q update | tee "$tmp"
+	if egrep -q '^C ' "$tmp"; then
+		rm $(sed -n 's/^C //p' "$tmp")
+		cvs -q update | tee "$tmp"
+	fi
 	popd
 
 	if [ -d "$CVSDIR/messages-$branch" ]; then
