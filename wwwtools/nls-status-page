@@ -18,6 +18,7 @@ a { color: #0092C3; }
 .newpo { color: #666; visibility: visible; }
 .qualifiedpo { background-color: #FFFF00; }
 .fullpo { background-color: #00FF00; }
+.errorpo { background-color: #FF0000; }
 </style>
 <script type="text/javascript">
 function getStyleClass (className) {
