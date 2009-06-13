@@ -13,13 +13,15 @@ set -e
 me=$(basename $0)
 
 adjustcvskeywords=true
+force=false
 run=true
 
-TEMP=$(getopt kn "$@")
+TEMP=$(getopt fkn "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
+		-f)	force=true; shift;;
 		-k)	adjustcvskeywords=false; shift;;
 		-n)	run=false; shift;;
 		--)	shift; break;;
@@ -48,7 +50,11 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 	if ! msgfmt -o /dev/null -c -v $srcfile 2>/dev/null; then
 		echo "$me: $srcfile has errors" 1>&2
 		msgfmt -o /dev/null -c -v $srcfile || :
-		continue
+		if $force; then
+			echo "$me: copying anyway, as requested" 1>&2
+		else
+			continue
+		fi
 	fi
 
 	for y in $nls_mks; do
