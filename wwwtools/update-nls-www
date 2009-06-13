@@ -48,7 +48,7 @@ for branch in $active_branches; do
 
 	if [ -d "$CVSDIR/messages-$branch" ]; then
 		(cd $CVSDIR/messages-$branch; cvs -q update) | tee -a "$tmp"
-		$MYDIR/../cp-po -k $CVSDIR/messages-$branch $PGSRC.work
+		$MYDIR/../cp-po -f -k $CVSDIR/messages-$branch $PGSRC.work
 	fi
 
 	if [ "$force" != true ] && ! egrep -q '^(U|P) ' "$tmp"; then
