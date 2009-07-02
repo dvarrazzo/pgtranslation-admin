@@ -83,7 +83,8 @@ my %branch_status = (
     '8.1-branch' => 'maintenance',
     '8.2-branch' => 'maintenance',
     '8.3-branch' => 'maintenance',
-    'current' => 'translate here, prepare for 8.4 beta and releases',
+    '8.4-branch' => 'complete missing translations',
+    'current' => 'cannot translate here yet',
 );
 
 my @branches = map { m!table-([^/]+).html$! && $1 } reverse sort glob("$dir/table-*.html");
@@ -97,6 +98,10 @@ foreach $b (@branches) {
 
 print <<_EOF_;
 </ul>
+
+<p>Note: The head in the translation repository contains the 8.4 translations, 
+where all current work should be directed.  You can't commit translations for 
+8.5 yet.</p>
 
 <p>Other information:
 <a href="http://wiki.postgresql.org/wiki/NLS">contributor/translator information (wiki)</a> |
