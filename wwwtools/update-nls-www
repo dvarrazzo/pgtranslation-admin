@@ -59,7 +59,7 @@ for branch in $active_branches; do
 
 	pushd $PGSRC.work
 	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib \
-		--with-perl --with-tcl
+		--with-perl --with-tcl --without-tk
 	popd
 
 	# remove old data in case it contained garbage
