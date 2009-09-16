@@ -99,10 +99,6 @@ foreach $b (@branches) {
 print <<_EOF_;
 </ul>
 
-<p>Note: The head in the translation repository contains the 8.4 translations, 
-where all current work should be directed.  You can't commit translations for 
-8.5 yet.</p>
-
 <p>Other information:
 <a href="http://wiki.postgresql.org/wiki/NLS">contributor/translator information (wiki)</a> |
 <a href="http://www.pgfoundry.org/projects/pgtranslation/">PgFoundry project</a>
