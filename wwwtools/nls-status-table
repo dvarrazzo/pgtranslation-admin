@@ -14,8 +14,10 @@ use I18N::LangTags::List;
 our $QUALIFIED_CUTOFF = 80;
 
 my %opts;
-getopts('U:', \%opts) or die;
+getopts('U:l:', \%opts) or die;
 my $po_url = $opts{'U'} || 'po';
+my $list_file = $opts{'l'};
+open LIST, '>', $opts{'l'} if $list_file;
 
 my $everything;
 my $errors;
@@ -136,6 +138,8 @@ foreach my $catalog (sort @catalogs) {
 	    print "&#x00A0;";
 	}
 	print "</td>\n";
+
+	print LIST "$catalog/$lang\n" if $list_file and $pct >= $QUALIFIED_CUTOFF;
     }
 
     print "<td align=\"center\">";
@@ -169,6 +173,7 @@ print "</tr>\n\n";
 print "</table>\n";
 print "</div>\n";
 
+close LIST if $list_file;
 
 
 sub list_sum {

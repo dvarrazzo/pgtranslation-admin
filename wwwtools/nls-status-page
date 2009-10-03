@@ -119,6 +119,8 @@ foreach $b (@branches) {
     open F, "$dir/table-${b}.html" or die $!;
     print foreach <F>;
     close F;
+
+    print "<p><a href='qualified-list-$b.txt'>qualified list</a></p>\n" if -e "$dir/qualified-list-$b.txt";
 }
 
 print <<_EOF_;

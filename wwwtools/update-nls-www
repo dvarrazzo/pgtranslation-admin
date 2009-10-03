@@ -63,13 +63,13 @@ for branch in $active_branches; do
 	popd
 
 	# remove old data in case it contained garbage
-	rm -rf $WEBDIR/po-$branch $WEBDIR/table-$branch.html
+	rm -rf $WEBDIR/po-$branch $WEBDIR/qualified-list-$branch.txt $WEBDIR/table-$branch.html
 
 	mkdir -p $WEBDIR/po-$branch
 	files=`find $PGSRC.work -name nls.mk`
 	$MYDIR/pg-make-po -o $WEBDIR/po-$branch -v $branch $files
 
-	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch *.pot *.po >$WEBDIR/table-$branch.html)
+	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch -l $WEBDIR/qualified-list-$branch.txt *.po *.pot >$WEBDIR/table-$branch.html)
 
 #	$MYDIR/pg-make-conflicts $branch $MYDIR $WEBDIR
 
