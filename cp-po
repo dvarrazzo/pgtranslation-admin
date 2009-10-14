@@ -16,13 +16,14 @@ adjustcvskeywords=true
 force=false
 run=true
 
-TEMP=$(getopt fkn "$@")
+TEMP=$(getopt fkL:n "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
 		-f)	force=true; shift;;
 		-k)	adjustcvskeywords=false; shift;;
+		-L) qualfile=$2; shift; shift;;
 		-n)	run=false; shift;;
 		--)	shift; break;;
 	esac
@@ -46,6 +47,10 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 	base=$(echo X"$srcfile" | sed "s,^X$srcdir/*,,")
 	lang=$(expr $base : '\([a-z][a-zA-Z_]*\)')
 	srccat=$(expr $base : '.*/\([^/]*\)\.po$')
+
+	if [ -n "$qualfile" ] && ! grep -q -F "$srccat/$lang" "$qualfile"; then
+		continue
+	fi
 
 	if ! msgfmt -o /dev/null -c -v $srcfile 2>/dev/null; then
 		echo "$me: $srcfile has errors" 1>&2
