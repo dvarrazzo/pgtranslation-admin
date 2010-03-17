@@ -15,12 +15,14 @@ me=$(basename $0)
 adjustcvskeywords=true
 force=false
 run=true
+delete=false
 
-TEMP=$(getopt fkL:n "$@")
+TEMP=$(getopt dfkL:n "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
+		-d) delete=true; shift;;
 		-f)	force=true; shift;;
 		-k)	adjustcvskeywords=false; shift;;
 		-L) qualfile=$2; shift; shift;;
@@ -91,3 +93,21 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 	done
 done
+
+if $delete && [ -n "$qualfile" ]; then
+	for y in $nls_mks; do
+		destcat=$(cat $y | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
+		if [ -z "$destcat" ]; then
+			echo "$me: could not determine catalog name from $y; skipped" 1>&2
+			continue
+		fi
+		destlang=$(cat $y | sed -n 's/AVAIL_LANGUAGES.*:*= *\(.*\)$/\1/p')
+		targetdir=$(echo $y | sed 's,nls\.mk$,po,')
+
+		for lang in $destlang; do
+			if ! grep -q -F "$destcat/$lang" "$qualfile"; then
+				echo "should DELETE unqualified: $targetdir/po/$lang.po" 1>&2
+			fi
+		done
+	done
+fi
