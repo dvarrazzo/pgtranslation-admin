@@ -64,6 +64,16 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 	fi
 
+	if msgfmt -o /dev/null -c -v $srcfile 2>&1 | grep -q "warning"; then
+		echo "$me: $srcfile has warnings" 1>&2
+		msgfmt -o /dev/null -c -v $srcfile || :
+		if $force; then
+			echo "$me: copying anyway, as requested" 1>&2
+		else
+			continue
+		fi
+	fi
+
 	for y in $nls_mks; do
 		destcat=$(cat $y | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
 		if [ -z "$destcat" ]; then
