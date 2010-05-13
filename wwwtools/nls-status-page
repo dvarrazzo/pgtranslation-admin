@@ -84,7 +84,7 @@ my %branch_status = (
     '8.2-branch' => 'maintenance',
     '8.3-branch' => 'maintenance',
     '8.4-branch' => 'maintenance',
-    'current' => 'alpha/early adopters',
+    'current' => 'beta, complete translations now',
 );
 
 my @branches = map { m!table-([^/]+).html$! && $1 } reverse sort glob("$dir/table-*.html");
