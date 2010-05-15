@@ -74,6 +74,17 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 		fi
 	fi
 
+	if grep -q -IU '' $srcfile; then
+		# DOS line endings break Solaris msgfmt
+		echo "$me: $srcfile contains DOS line endings" 1>&2
+		grep -n -m5 -IU '' $srcfile 1>&2 || :
+		if $force; then
+			echo "$me: copying anyway, as requested" 1>&2
+		else
+			continue
+		fi
+	fi
+
 	for y in $nls_mks; do
 		destcat=$(cat $y | sed -n 's/CATALOG_NAME.*:*= *\([^ ]*\)$/\1/p')
 		if [ -z "$destcat" ]; then
