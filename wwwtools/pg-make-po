@@ -99,17 +99,28 @@ foreach (@ARGV) {
     foreach $lang (@all_languages) {
 	print STDERR "$lang: ";
 
+	system("rm -f $outdir/$catalogname-$lang.po.err");
+
         if (-f "$dirname/po/$lang.po") {
             # This is what the use to calcuate the displayed percentages.
             if (system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg") != 0) {
-                system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+                system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
+
+	    if (system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po >/dev/null 2>&1") != 0
+		or system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po >/dev/null 2>&1 | grep -q 'warning'") == 0) {
+		system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+	    }
+
+	    if (system("grep -q -IU '' $dirname/po/$lang.po") == 0) {
+		system("echo '$dirname/po/$lang.po contains DOS line endings' >>$outdir/$catalogname-$lang.po.err");
+	    }
         }
 
         if ($version eq 'current' or $version eq '8.4-branch') {
             # This is what we offer for download.
 	    if (system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages'") != 0) {
-                system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages' 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+                system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages' 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
         }
 
@@ -129,8 +140,9 @@ foreach (@ARGV) {
             system("cat $dirname/po/$lang.po.new | sed '/Plural-Forms:/s/nplurals=INTEGER; plural=EXPRESSION;/$pe/' >$outdir/$catalogname-$lang.po");
         }
 
-        if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0) {
-	    system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>$outdir/$catalogname-$lang.po.err 1>/dev/null");
+        if (system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1") != 0
+	    or system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po >/dev/null 2>&1 | grep -q 'warning'") == 0) {
+	    system("$msgfmt -o /dev/null -v -c $outdir/$catalogname-$lang.po 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
         }
     } # foreach $lang
 } # foreach @ARGV
