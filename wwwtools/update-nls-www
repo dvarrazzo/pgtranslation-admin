@@ -35,11 +35,11 @@ for branch in $active_branches; do
 
 	PGSRC=$CVSDIR/postgresql-$branch
 
+	pgsrc_updated=false
 	pushd $PGSRC
-	cvs -q update | tee "$tmp"
-	if egrep -q '^C ' "$tmp"; then
-		rm $(sed -n 's/^C //p' "$tmp")
-		cvs -q update | tee "$tmp"
+	git pull
+	if [ $(git rev-parse --verify --quiet HEAD) != $(git rev-parse --verify --quiet ORIG_HEAD) ]; then
+	    pgsrc_updated=true
 	fi
 	popd
 
@@ -51,7 +51,7 @@ for branch in $active_branches; do
 		$MYDIR/../cp-po -f -k $CVSDIR/messages-$branch $PGSRC.work
 	fi
 
-	if [ "$force" != true ] && ! egrep -q '^(U|P) ' "$tmp"; then
+	if [ "$force" != true ] && ! egrep -q '^(U|P) ' "$tmp" && ! $pgsrc_updated; then
 		continue
 	fi
 
