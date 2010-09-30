@@ -108,7 +108,7 @@ foreach (@ARGV) {
             }
 
 	    if (system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po >/dev/null 2>&1") != 0
-		or system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po >/dev/null 2>&1 | grep -q 'warning'") == 0) {
+		or system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po 2>&1 | grep -q 'warning'") == 0) {
 		system("$msgfmt -o /dev/null -v -c $dirname/po/$lang.po 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
 	    }
 
