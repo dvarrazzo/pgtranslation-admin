@@ -78,13 +78,11 @@ list</a> about when a branch is about to be released.</p>
 _EOF_
 
 my %branch_status = (
-    '7.4-branch' => 'maintenance',
-    '8.0-branch' => 'maintenance',
     '8.1-branch' => 'maintenance',
     '8.2-branch' => 'maintenance',
     '8.3-branch' => 'maintenance',
     '8.4-branch' => 'maintenance',
-    '9.0-branch' => 'beta, complete translations now',
+    '9.0-branch' => 'maintenance',
     'current' => 'not translating yet',
 );
 
