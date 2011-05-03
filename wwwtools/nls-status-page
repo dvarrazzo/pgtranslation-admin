@@ -123,5 +123,15 @@ foreach $b (@branches) {
 
 print <<_EOF_;
 </body>
+<script type="text/javascript">
+var elements = document.getElementsByClassName('timestamp');
+var i;
+for (i = 0; i < elements.length; i++) {
+    var s = elements[i].textContent;
+    var d = new Date(Date.parse(s));
+    elements[i].textContent = d.toString();
+    elements[i].setAttribute('title', d.toUTCString());
+}
+</script>
 </html>
 _EOF_

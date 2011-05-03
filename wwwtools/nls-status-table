@@ -79,7 +79,9 @@ foreach my $catalog (@catalogs) {
 @all_lang = sort @all_lang;
 
 print "<div>\n";
-print "<p>Last update: ".`date -u +'%Y-%m-%d %H:%M:%S'`." UTC</p>\n";
+my $date = `date -u +'%FT%TZ'`;
+chomp $date;
+print "<p>Last update: <span class='timestamp'>$date</span></p>\n";
 
 print "<table border=\"1\" width=\"100%\" cellspacing=\"0\" cellpadding=\"1\">\n\n";
 print "<colgroup span=\"1\" width=\"0*\" />\n";
