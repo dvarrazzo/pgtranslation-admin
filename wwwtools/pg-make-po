@@ -117,7 +117,7 @@ foreach (@ARGV) {
 	    }
         }
 
-        if ($version eq 'current' or $version eq '8.4-branch' or $version eq '9.0-branch') {
+        if ($version eq 'current' or $version eq '8.4-branch' or $version eq '9.0-branch' or $version eq '9.1-branch') {
             # This is what we offer for download.
 	    if (system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages'") != 0) {
                 system("$gmake -C $dirname po/$lang.po.new AVAIL_LANGUAGES='$avail_languages' 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
