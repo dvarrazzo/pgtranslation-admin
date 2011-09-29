@@ -23,11 +23,11 @@ eval set -- "$TEMP"
 while true; do
 	case $1 in
 		-d) delete=true; shift;;
-		-f)	force=true; shift;;
-		-k)	adjustcvskeywords=false; shift;;
+		-f) force=true; shift;;
+		-k) adjustcvskeywords=false; shift;;
 		-L) qualfile=$2; shift; shift;;
-		-n)	run=false; shift;;
-		--)	shift; break;;
+		-n) run=false; shift;;
+		--) shift; break;;
 	esac
 done
 
