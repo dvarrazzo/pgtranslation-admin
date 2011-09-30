@@ -16,17 +16,21 @@ adjustcvskeywords=true
 force=false
 run=true
 delete=false
+update_target_tree=false
+git_mode=false
 
-TEMP=$(getopt dfkL:n "$@")
+TEMP=$(getopt dfgkL:nu "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
 		-d) delete=true; shift;;
 		-f) force=true; shift;;
+		-g) git_mode=true; update_target_tree=true; shift;;
 		-k) adjustcvskeywords=false; shift;;
 		-L) qualfile=$2; shift; shift;;
 		-n) run=false; shift;;
+		-u) update_target_tree=true; shift;;
 		--) shift; break;;
 	esac
 done
@@ -41,6 +45,13 @@ destdir=$2
 if [ -z "$destdir" ]; then
 	echo "$me: no destination directory specified" 1>&2
 	exit 1
+fi
+
+if $git_mode; then
+	GIT_WORK_TREE=$(cd "$destdir" && pwd)
+	export GIT_WORK_TREE
+	GIT_DIR=$GIT_WORK_TREE/.git
+	export GIT_DIR
 fi
 
 nls_mks=$(find "$destdir" -name nls.mk)
@@ -95,7 +106,9 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 			targetdir=$(echo $y | sed 's,nls\.mk$,po,')
 			targetfile=$targetdir/$lang.po
 			if [ ! -e $targetfile ]; then
-				echo "NEW: $targetfile --- file will be copied, but do \"cvs add\" and fix $y by hand" 1>&2
+				if ! $update_target_tree; then
+					echo "NEW: $targetfile --- file will be copied, but do \"git add\" and fix $y by hand" 1>&2
+				fi
 			fi
 			if [ ! -e $targetfile ] \
 			   || { ! $adjustcvskeywords && ! diff $srcfile $targetfile >/dev/null; } \
@@ -109,6 +122,9 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 						cp $srcfile $targetfile
 					fi
 					chmod 644 $targetfile
+					if $git_mode; then
+						git add $targetfile
+					fi
 				fi
 			fi
 		fi
@@ -127,8 +143,31 @@ if $delete && [ -n "$qualfile" ]; then
 
 		for lang in $destlang; do
 			if ! grep -q -F "$destcat/$lang" "$qualfile"; then
-				echo "should DELETE unqualified: $targetdir/po/$lang.po" 1>&2
+				if $run && $update_target_tree; then
+					rm $targetdir/po/$lang.po
+					if $git_mode; then
+						git rm -q $targetdir/po/$lang.po
+					fi
+				else
+					echo "should DELETE unqualified: $targetdir/po/$lang.po" 1>&2
+				fi
 			fi
 		done
 	done
+fi
+
+if $update_target_tree; then
+	for y in $nls_mks; do
+		targetdir=$(echo $y | sed 's,nls\.mk$,po,')
+		langs=$(echo $(cd $targetdir && ls *.po | sed 's/\.po$//'))
+		sed -e 's/\(AVAIL_LANGUAGES.*:*= *\).*$/\1'"$langs/" $y >$y.new
+		mv $y.new $y
+		if $git_mode; then
+			git add $y
+		fi
+	done
+fi
+
+if $git_mode; then
+	git commit -m 'Translation updates'
 fi
