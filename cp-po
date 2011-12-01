@@ -123,7 +123,7 @@ for srcfile in $(find "$srcdir" -name '*.po'); do
 					fi
 					chmod 644 $targetfile
 					if $git_mode; then
-						git add $targetfile
+						git add $(echo "$targetfile" | sed "s,^$destdir/,,")
 					fi
 				fi
 			fi
@@ -163,7 +163,7 @@ if $update_target_tree; then
 		sed -e 's/\(AVAIL_LANGUAGES.*:*= *\).*$/\1'"$langs/" $y >$y.new
 		mv $y.new $y
 		if $git_mode; then
-			git add $y
+			git add $(echo "$y" | sed "s,^$destdir/,,")
 		fi
 	done
 fi
