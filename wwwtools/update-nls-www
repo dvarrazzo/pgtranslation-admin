@@ -25,10 +25,8 @@ if [ -n "$1" ]; then
 	force=true
 fi
 
-lock="$PWD/lock"
-test -e "$lock" && exit 77
-trap 'rm -f $tmp $lock' EXIT ERR SIGHUP SIGINT SIGPIPE SIGTERM
-touch "$lock"
+(
+flock -n 9 || exit 0
 
 for branch in $active_branches; do
 	tmp=`mktemp /tmp/$me.XXXXXX`
@@ -78,3 +76,5 @@ for branch in $active_branches; do
 done
 
 date -u +%FT%T
+
+) 9>"$PWD/lock"
