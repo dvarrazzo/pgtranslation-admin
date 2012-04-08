@@ -102,7 +102,7 @@ foreach (@ARGV) {
 	system("rm -f $outdir/$catalogname-$lang.po.err");
 
         if (-f "$dirname/po/$lang.po") {
-            # This is what the use to calcuate the displayed percentages.
+            # This is what we use to calculate the displayed percentages.
             if (system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg") != 0) {
                 system("$msgmerge $dirname/po/$lang.po $dirname/po/$catalogname.pot -o $dirname/po/$lang.po.mrg 2>>$outdir/$catalogname-$lang.po.err 1>/dev/null");
             }
