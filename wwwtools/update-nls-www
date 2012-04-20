@@ -13,10 +13,21 @@ set -ex
 MYDIR=$(cd $(dirname $0) && pwd)
 WEBDIR=$MYDIR/../../htwork
 CVSDIR=$(cd $MYDIR/../../cvs && pwd)
+output_dir=~/htdocs
 
 GMAKE=make
 which gmake >/dev/null && GMAKE=gmake
 export GMAKE
+
+TEMP=$(getopt o: "$@")
+eval set -- "$TEMP"
+
+while true; do
+	case $1 in
+		-o) output_dir=$2; shift; shift;;
+		--) shift; break;;
+	esac
+done
 
 active_branches="9.1-branch 9.0-branch 8.4-branch 8.3-branch"
 
@@ -72,7 +83,7 @@ for branch in $active_branches; do
 #	$MYDIR/pg-make-conflicts $branch $MYDIR $WEBDIR
 
 	$MYDIR/nls-status-page $WEBDIR > $WEBDIR/index.html
-	rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ ~/htdocs/
+	rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ "$output_dir"
 done
 
 date -u +%FT%T
