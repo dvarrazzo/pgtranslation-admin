@@ -40,8 +40,6 @@ fi
 flock -n 9 || exit 0
 
 for branch in $active_branches; do
-	tmp=`mktemp /tmp/$me.XXXXXX`
-
 	PGSRC=$CVSDIR/postgresql-$branch
 
 	pgsrc_updated=false
@@ -55,16 +53,20 @@ for branch in $active_branches; do
 	rm -rf $PGSRC.work
 	cp -R $PGSRC $PGSRC.work
 
+	pgmessages_updated=false
 	if [ -d "$CVSDIR/messages-$branch" ]; then
-		(cd $CVSDIR/messages-$branch; cvs -q update) | tee -a "$tmp"
+		pushd $CVSDIR/messages-$branch
+		git pull
+		if [ $(git rev-parse --verify --quiet HEAD) != $(git rev-parse --verify --quiet ORIG_HEAD) ]; then
+			pgmessages_updated=true
+		fi
+		popd
 		$MYDIR/../cp-po -f -k $CVSDIR/messages-$branch $PGSRC.work
 	fi
 
-	if [ "$force" != true ] && ! egrep -q '^(U|P) ' "$tmp" && ! $pgsrc_updated; then
+	if [ "$force" != true ] && ! $pgmessages_updated && ! $pgsrc_updated; then
 		continue
 	fi
-
-	rm -f "$tmp"
 
 	pushd $PGSRC.work
 	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib \
