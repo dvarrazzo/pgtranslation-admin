@@ -1,0 +1,3 @@
+include = cat messages-branches.txt | while read dir branch; do echo "[scm/$dir]"; echo "checkout = git clone --depth=1 -b $branch git://git.postgresql.org/git/pgtranslation/messages.git $dir"; echo "pre_update = git checkout $branch"; echo; done
+
+include = cat postgresql-branches.txt | while read dir branch; do echo "[scm/$dir]"; echo "checkout = git clone --depth=1 -b $branch git://git.postgresql.org/git/postgresql.git $dir"; echo "pre_update = git checkout $branch"; echo; done

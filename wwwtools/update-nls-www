@@ -11,19 +11,20 @@ me=$(basename $0)
 set -ex
 
 MYDIR=$(cd $(dirname $0) && pwd)
-WEBDIR=$MYDIR/../../htwork
-CVSDIR=$(cd $MYDIR/../../cvs && pwd)
+WEBDIR=$MYDIR/htwork
+SCMDIR=$MYDIR/scm
 output_dir=~/htdocs
 
 GMAKE=make
 which gmake >/dev/null && GMAKE=gmake
 export GMAKE
 
-TEMP=$(getopt o: "$@")
+TEMP=$(getopt fo: "$@")
 eval set -- "$TEMP"
 
 while true; do
 	case $1 in
+		-f) force=true; shift;;
 		-o) output_dir=$2; shift; shift;;
 		--) shift; break;;
 	esac
@@ -33,42 +34,45 @@ active_branches="9.2-branch 9.1-branch 9.0-branch 8.4-branch 8.3-branch"
 
 if [ -n "$1" ]; then
 	active_branches=$1
-	force=true
 fi
+
+pushd $MYDIR
 
 (
 flock -n 9 || exit 0
 
 for branch in $active_branches; do
-	PGSRC=$CVSDIR/postgresql-$branch
+	PGSRC=$SCMDIR/postgresql-$branch
 
 	pgsrc_updated=false
+	if [ -d $PGSRC ]; then
+		pushd $PGSRC
+		git reset --hard
+		git clean -dfqx
+		popd
+	fi
+	mr -t -c mrconfig -d scm/postgresql-$branch update  # git pull
 	pushd $PGSRC
-	git pull
-	if [ $(git rev-parse --verify --quiet HEAD) != $(git rev-parse --verify --quiet ORIG_HEAD) ]; then
+	if [ x$(git rev-parse --verify --quiet HEAD) != x$(git rev-parse --verify --quiet ORIG_HEAD) ]; then
 	    pgsrc_updated=true
 	fi
 	popd
 
-	rm -rf $PGSRC.work
-	cp -R $PGSRC $PGSRC.work
-
 	pgmessages_updated=false
-	if [ -d "$CVSDIR/messages-$branch" ]; then
-		pushd $CVSDIR/messages-$branch
-		git pull
-		if [ $(git rev-parse --verify --quiet HEAD) != $(git rev-parse --verify --quiet ORIG_HEAD) ]; then
-			pgmessages_updated=true
-		fi
-		popd
-		$MYDIR/../cp-po -f -k $CVSDIR/messages-$branch $PGSRC.work
+	mr -t -c mrconfig -d scm/messages-$branch update  # git pull
+	pushd $SCMDIR/messages-$branch
+	if [ x$(git rev-parse --verify --quiet HEAD) != x$(git rev-parse --verify --quiet ORIG_HEAD) ]; then
+		pgmessages_updated=true
 	fi
+	popd
 
 	if [ "$force" != true ] && ! $pgmessages_updated && ! $pgsrc_updated; then
 		continue
 	fi
 
-	pushd $PGSRC.work
+	$MYDIR/../cp-po -f -k $SCMDIR/messages-$branch $PGSRC
+
+	pushd $PGSRC
 	./configure --prefix=$MYDIR/pg-install --cache=/dev/null --enable-nls --with-includes=/usr/local/include --with-libraries=/usr/local/lib \
 		--with-perl --with-tcl --without-tk
 	popd
@@ -77,12 +81,10 @@ for branch in $active_branches; do
 	rm -rf $WEBDIR/po-$branch $WEBDIR/qualified-list-$branch.txt $WEBDIR/table-$branch.html
 
 	mkdir -p $WEBDIR/po-$branch
-	files=`find $PGSRC.work -name nls.mk`
+	files=`find $PGSRC -name nls.mk`
 	$MYDIR/pg-make-po -o $WEBDIR/po-$branch -v $branch $files
 
 	(cd $WEBDIR/po-$branch && $MYDIR/nls-status-table -U po-$branch -l $WEBDIR/qualified-list-$branch.txt *.po *.pot >$WEBDIR/table-$branch.html)
-
-#	$MYDIR/pg-make-conflicts $branch $MYDIR $WEBDIR
 
 	$MYDIR/nls-status-page $WEBDIR > $WEBDIR/index.html
 	rsync -l -r --delete --delete-excluded --exclude='table-*.html' $WEBDIR/ "$output_dir"
@@ -90,4 +92,4 @@ done
 
 date -u +%FT%T
 
-) 9>"$PWD/lock"
+) 9>"$MYDIR/lock"
