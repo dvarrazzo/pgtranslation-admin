@@ -141,7 +141,7 @@ foreach my $catalog (sort @catalogs) {
 	}
 	print "</td>\n";
 
-	print LIST "$catalog/$lang\n" if $list_file and $pct >= $QUALIFIED_CUTOFF;
+	print LIST "$catalog/$lang\n" if $list_file and defined $pct and $pct >= $QUALIFIED_CUTOFF;
     }
 
     print "<td align=\"center\">";
