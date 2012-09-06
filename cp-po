@@ -144,12 +144,13 @@ if $delete && [ -n "$qualfile" ]; then
 		for lang in $destlang; do
 			if ! grep -q -F "$destcat/$lang" "$qualfile"; then
 				if $run && $update_target_tree; then
-					rm $targetdir/po/$lang.po
 					if $git_mode; then
-						git rm -q $targetdir/po/$lang.po
+						(cd $targetdir && git rm -q --ignore-unmatch $lang.po)
+					else
+						rm -f $targetdir/$lang.po
 					fi
 				else
-					echo "should DELETE unqualified: $targetdir/po/$lang.po" 1>&2
+					echo "should DELETE unqualified: $targetdir/$lang.po" 1>&2
 				fi
 			fi
 		done
