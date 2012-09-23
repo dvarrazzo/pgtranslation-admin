@@ -1,16 +1,41 @@
 #!/bin/sh
 
-# Copies PO files from a PgFoundry repository structure to a PostgreSQL
-# source tree.
-#
-# Usage: cp-po [-n] SOURCEDIR DESTDIR
-#
+usage="\
+Copies PO files from a PG messages repository structure to a PostgreSQL
+source tree.
+
+Usage: cp-po [OPTION...] SOURCEDIR DESTDIR
+
+Options:
+  -d        delete files from DESTDIR based on qualified list (-L)
+  -f        copy a PO file even if it has warnings or errors
+  -g        Git mode; combination of -u and make a commit in DESTDIR
+  -k        don't adjust CVS key words of target files; obsolete
+  -L FILE   qualified list; determines which files to copy; together with -d,
+            all files not listed are deleted from DESTDIR
+  -n        dry run
+  -u        update target tree: adjust nls.mk and perform deletes
+
+Typical use for preparing a release:
+  cp-po -L qualified-list-X.Y-branch.txt -g messages postgresql
+  # (add -d before a major release)
+  cd postgresql && git push
+
+Typical use in babel web site scripts:
+  cp-po -f -k messages postgresql
+"
+
 # Written by Peter Eisentraut
 # Public domain
 
 set -e
 
 me=$(basename $0)
+
+if [ "$1" = '--help' ]; then
+    echo "$usage"
+    exit 0
+fi
 
 adjustcvskeywords=true
 force=false
