@@ -53,7 +53,7 @@ while true; do
 		-f) force=true; shift;;
 		-g) git_mode=true; update_target_tree=true; shift;;
 		-k) adjustcvskeywords=false; shift;;
-		-L) qualfile=$2; shift; shift;;
+		-L) qualfile=$2; test -e "$qualfile"; shift; shift;;
 		-n) run=false; shift;;
 		-u) update_target_tree=true; shift;;
 		--) shift; break;;
