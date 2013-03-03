@@ -78,11 +78,11 @@ list</a> about when a branch is about to be released.</p>
 _EOF_
 
 my %branch_status = (
-    '8.3-branch' => 'maintenance',
     '8.4-branch' => 'maintenance',
     '9.0-branch' => 'maintenance',
     '9.1-branch' => 'maintenance',
-    '9.2-branch' => 'translate this now',
+    '9.2-branch' => 'maintenance',
+    'current' => 'translate this now',
 );
 
 my @branches = map { m!table-([^/]+).html$! && $1 } reverse sort glob("$dir/table-*.html");

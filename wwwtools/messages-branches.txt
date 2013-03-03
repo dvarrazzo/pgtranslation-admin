@@ -1,6 +1,5 @@
 messages-current		master
-messages-9.2-branch		master
+messages-9.2-branch		REL9_2_STABLE
 messages-9.1-branch		REL9_1_STABLE
 messages-9.0-branch		REL9_0_STABLE
 messages-8.4-branch		REL8_4_STABLE
-messages-8.3-branch		REL8_3_STABLE

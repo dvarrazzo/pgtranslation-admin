@@ -3,4 +3,3 @@ postgresql-9.2-branch	REL9_2_STABLE
 postgresql-9.1-branch	REL9_1_STABLE
 postgresql-9.0-branch	REL9_0_STABLE
 postgresql-8.4-branch	REL8_4_STABLE
-postgresql-8.3-branch	REL8_3_STABLE

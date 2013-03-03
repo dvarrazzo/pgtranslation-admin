@@ -30,7 +30,7 @@ while true; do
 	esac
 done
 
-active_branches="9.2-branch 9.1-branch 9.0-branch 8.4-branch 8.3-branch"
+active_branches="current 9.2-branch 9.1-branch 9.0-branch 8.4-branch"
 
 if [ -n "$1" ]; then
 	active_branches=$1
