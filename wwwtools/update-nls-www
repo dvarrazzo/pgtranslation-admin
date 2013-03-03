@@ -49,6 +49,7 @@ for branch in $active_branches; do
 		pushd $PGSRC
 		git reset --hard
 		git clean -dfqx
+		git remote update
 		popd
 	fi
 	mr -t -c mrconfig -d scm/postgresql-$branch update  # git pull
@@ -59,6 +60,11 @@ for branch in $active_branches; do
 	popd
 
 	pgmessages_updated=false
+	if [ -d $SCMDIR/messages-$branch ]; then
+		pushd $SCMDIR/messages-$branch
+		git remote update
+		popd
+	fi
 	mr -t -c mrconfig -d scm/messages-$branch update  # git pull
 	pushd $SCMDIR/messages-$branch
 	if [ x$(git rev-parse --verify --quiet HEAD) != x$(git rev-parse --verify --quiet ORIG_HEAD) ]; then
