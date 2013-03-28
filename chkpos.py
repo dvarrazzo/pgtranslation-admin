@@ -13,7 +13,8 @@ import sys
 import glob
 import polib
 import codecs
-import xml.etree.ElementTree as ET
+# can't use stdlib's ET because of bug #5752
+import lxml.etree as ET
 from operator import attrgetter
 from itertools import count
 from collections import defaultdict
