@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<whitelist>
+  <file filename="fa/psql.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Password: " msgstr="رمز عبور:" />
+      <item msgid="SSL connection (cipher: %s, bits: %i)&#10;&#10;" msgstr="اتصال SSL (رمز : %s ، بیتها: %i) &#10;" />
+      <item msgid="The connection to the server was lost. Attempting reset: " msgstr="ارتباط با سرور قطع شد. سعی در برقراری مجدد ارتباط:" />
+      <item msgid="User name: " msgstr="نام کاربری :" />
+      <item msgid="primary key, " msgstr="کلید اصلی،" />
+      <item msgid="unique, " msgstr="یکتا،" />
+    </check>
+  </file>
+  <file filename="fr/libpq.po">
+    <check name="SuffixWhitespace">
+      <item msgid="LOCATION:  " msgstr="EMPLACEMENT : " />
+    </check>
+  </file>
+  <file filename="ja/initdb.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="再入力してください:" />
+      <item msgid="Enter new superuser password: " msgstr="新しいスーパーユーザのパスワードを入力してください:" />
+    </check>
+  </file>
+  <file filename="ja/pgscripts.po">
+    <check name="SuffixWhitespace">
+      <item msgid="%s (%s/%s) " msgstr="%s (%s/%s)" />
+      <item msgid="Enter it again: " msgstr="もう一度入力してください：" />
+      <item msgid="Enter name of role to add: " msgstr="追加したいロール名を入力：" />
+      <item msgid="Enter name of role to drop: " msgstr="削除したいロール名を入力：" />
+    </check>
+  </file>
+  <file filename="ja/postgres.po">
+    <check name="SuffixWhitespace">
+      <item msgid="could not fork new process for connection: " msgstr="接続用の新しいプロセスをforkできませんでした" />
+      <item msgid="rule %s on " msgstr="のルール %s" />
+      <item msgid="trigger %s on " msgstr="トリガ %s、対象:" />
+    </check>
+  </file>
+  <file filename="ja/psql.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="もう一度入力してください：" />
+      <item msgid="Password valid until " msgstr="パスワード有効期限" />
+    </check>
+  </file>
+  <file filename="ko/initdb.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="암호 확인:" />
+      <item msgid="Enter new superuser password: " msgstr="새 superuser 암호를 입력하십시오:" />
+      <item msgid="copying template1 to postgres ... " msgstr="template1 데이터베이스를 postgres 데이터베이스로 복사 중 ..." />
+      <item msgid="copying template1 to template0 ... " msgstr="template1 데이터베이스를 template0 데이터베이스로 복사 중 ..." />
+      <item msgid="creating configuration files ... " msgstr="환경설정 파일을 만드는 중 ..." />
+      <item msgid="creating conversions ... " msgstr="인코딩 변환규칙(conversion)들을 만드는 중 ..." />
+      <item msgid="creating directory %s ... " msgstr="%s 디렉터리 만드는 중 ..." />
+      <item msgid="creating information schema ... " msgstr="information schema 만드는 중 ..." />
+      <item msgid="creating subdirectories ... " msgstr="하위 디렉터리 만드는 중 ..." />
+      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 안에 template1 데이터베이스를 만드는 중 ..." />
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="이미 있는 %s 디렉터리의 액세스 권한을 고치는 중 ..." />
+      <item msgid="initializing dependencies ... " msgstr="의존성 정보 초기화 중 ..." />
+      <item msgid="initializing pg_authid ... " msgstr="pg_authid 초기화 중 ..." />
+      <item msgid="loading system objects' descriptions ... " msgstr="시스템 개체들 설명 자료 입력 중 ..." />
+      <item msgid="selecting default max_connections ... " msgstr="max_connections 초기값을 선택하는 중 ..." />
+      <item msgid="setting password ... " msgstr="암호 설정 중 ..." />
+      <item msgid="vacuuming database template1 ... " msgstr="template1 데이터베이스 청소 중 ..." />
+    </check>
+  </file>
+  <file filename="ko/pgscripts.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Password: " msgstr="암호:" />
+    </check>
+  </file>
+  <file filename="ko/postgres.po">
+    <check name="SuffixWhitespace">
+      <item msgid="QUERY:  " msgstr="쿼리:" />
+    </check>
+  </file>
+  <file filename="ko/psql.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="다시 입력해 주세요:" />
+      <item msgid="Enter new password: " msgstr="새 암호를 입력하세요:" />
+    </check>
+  </file>
+  <file filename="ta/initdb.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="மீண்டும் பதியவும்:" />
+      <item msgid="Enter new superuser password: " msgstr="புதிய முதன்மைப் பயனர் கடவுச் சொல்லை பதியவும்:" />
+      <item msgid="copying template1 to postgres ... " msgstr="வார்ப்பு1  போஸ்ட்க்ரெஸுக்கு நகலெடுக்கப் படுகின்றது" />
+      <item msgid="copying template1 to template0 ... " msgstr="வார்ப்பு1  வார்ப்பு0 க்கு நகலெடுக்கப் படுகின்றது ..." />
+      <item msgid="creating configuration files ... " msgstr="வடிவமைப்புக் கோப்புகள் உருவாக்கப் படுகின்றன ..." />
+      <item msgid="creating conversions ... " msgstr="மாற்றங்கள் உருவாக்கப் படுகின்றன..." />
+      <item msgid="creating dictionaries ... " msgstr="அகராதிகள் உருவாக்கப் படுகின்றன..." />
+      <item msgid="creating directory %s ... " msgstr="%s அடைவு உருவாக்கப் படுகிறது..." />
+      <item msgid="creating information schema ... " msgstr="தகவல் ஸ்கீமா  உருவாக்கப் படுகின்றாது ..." />
+      <item msgid="creating subdirectories ... " msgstr="துணையடைவுகள் உருவாக்கப் படுகின்றன ..." />
+      <item msgid="creating system views ... " msgstr="அமைப்பு பார்வைகள் உருவாக்கப் படுகின்றன ..." />
+      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 ல் வார்ப்பு1  தரவுக் களன் உருவாக்கப் படுகிறது ..." />
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="இருக்கக் கூடிய அடைவுகளில் உரிமங்கள் சரிசெய்யப் படுகின்றன %s ..." />
+      <item msgid="initializing dependencies ... " msgstr="சார்புடைமைகள் துவக்கப்படுகின்றன ..." />
+      <item msgid="initializing pg_authid ... " msgstr="pg_authid துவக்கப் படுகின்றது ..." />
+      <item msgid="loading system objects' descriptions ... " msgstr="வன் பொருட்களின் விவரங்கள் ஏற்றப்படுகின்றன..." />
+      <item msgid="selecting default max_connections ... " msgstr="இயல்பிருப்பாக இருக்க வேண்டிய max_connections தேர்வு செய்யப் படுகின்றது ..." />
+      <item msgid="selecting default shared_buffers/max_fsm_pages ... " msgstr="இயல்பிருப்பு shared_buffers/max_fsm_pages தேர்வு செய்யப் படுகின்றது ..." />
+      <item msgid="setting password ... " msgstr="கடவுச் சொல் அமைக்கப்படுகின்றது..." />
+      <item msgid="setting privileges on built-in objects ... " msgstr="உருவாக்கப் பட்டிருக்கும் பொருட்களுக்கு சலுகைகள்  அமைக்கப் படுகின்றன ..." />
+      <item msgid="vacuuming database template1 ... " msgstr="தரவுக் களத்தின் வார்ப்பு காலியாக்கப் படுகின்றது ..." />
+    </check>
+  </file>
+  <file filename="ta/libpq.po">
+    <check name="SuffixWhitespace">
+      <item msgid="LOCATION:  " msgstr="இருப்பிடம்: " />
+    </check>
+  </file>
+  <file filename="ta/pgscripts.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="மீண்டும் உள்ளிடவும்:" />
+      <item msgid="Enter password for new role: " msgstr="புதியப் பொறுப்பிற்கானகானக் கடவுச் சொல்லினைக் காட்டுக:" />
+      <item msgid="Password: " msgstr="கடவுச்சொல்:" />
+    </check>
+  </file>
+  <file filename="zh_CN/ecpg.po">
+    <check name="SuffixWhitespace">
+      <item msgid="ERROR: " msgstr="错误:" />
+      <item msgid="WARNING: " msgstr="警告:" />
+    </check>
+  </file>
+  <file filename="zh_CN/libpq.po">
+    <check name="SuffixWhitespace">
+      <item msgid="LINE %d: " msgstr="第%d行" />
+    </check>
+  </file>
+  <file filename="zh_CN/psql.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter it again: " msgstr="再次键入：" />
+      <item msgid="Enter new password: " msgstr="输入新的密码：" />
+      <item msgid="Password for user %s: " msgstr="用户 %s 的口令：" />
+      <item msgid="Password valid until " msgstr="密码有效直至" />
+      <item msgid="Password: " msgstr="口令：" />
+      <item msgid="primary key, " msgstr="主键(PK)," />
+      <item msgid="unique, " msgstr="唯一的," />
+    </check>
+  </file>
+  <file filename="zh_TW/ecpg.po">
+    <check name="SuffixWhitespace">
+      <item msgid="ERROR: " msgstr="錯誤:" />
+      <item msgid="WARNING: " msgstr="警告:" />
+    </check>
+  </file>
+  <file filename="zh_TW/initdb.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter new superuser password: " msgstr="輸入新的管理者密碼：" />
+      <item msgid="copying template1 to postgres ... " msgstr="複製 template1 到 postgres..." />
+      <item msgid="copying template1 to template0 ... " msgstr="複製 template1 到 template0 ..." />
+      <item msgid="creating configuration files ... " msgstr="建立設定檔..." />
+      <item msgid="creating dictionaries ... " msgstr="建立字典..." />
+      <item msgid="creating directory %s ... " msgstr="建立目錄 %s ..." />
+      <item msgid="creating subdirectories ... " msgstr="建立子目錄..." />
+      <item msgid="creating system views ... " msgstr="建立系統views..." />
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="修正現有目錄 %s 的權限..." />
+      <item msgid="initializing dependencies ... " msgstr="初始化相依性..." />
+      <item msgid="initializing pg_authid ... " msgstr="初始化 pg_authid..." />
+      <item msgid="loading PL/pgSQL server-side language ... " msgstr="載入 PL/pgSQL 伺服器端語言 ..." />
+      <item msgid="loading system objects' descriptions ... " msgstr="正在載入系統物件的描述..." />
+      <item msgid="selecting default max_connections ... " msgstr="選擇預設的max_connections ..." />
+      <item msgid="selecting default shared_buffers ... " msgstr="選擇預設的shared_buffers ..." />
+      <item msgid="setting password ... " msgstr="設定密碼..." />
+      <item msgid="vacuuming database template1 ... " msgstr="重整資料庫template1 ..." />
+    </check>
+  </file>
+  <file filename="zh_TW/libpq.po">
+    <check name="SuffixWhitespace">
+      <item msgid="LINE %d: " msgstr="行 %d:" />
+      <item msgid="LOCATION:  " msgstr="位置:" />
+    </check>
+  </file>
+  <file filename="zh_TW/pgscripts.po">
+    <check name="SuffixWhitespace">
+      <item msgid="Enter name of role to add: " msgstr="輸入新身份的名稱:" />
+      <item msgid="Enter name of role to drop: " msgstr="輸入要刪除的身份:" />
+      <item msgid="Enter password for new role: " msgstr="輸入新身份的密碼:" />
+    </check>
+  </file>
+  <file filename="zh_TW/postgres.po">
+    <check name="SuffixWhitespace">
+      <item msgid="CONTEXT:  " msgstr="上下文:" />
+      <item msgid="DETAIL:  " msgstr="詳細: " />
+      <item msgid="HINT:  " msgstr="提示: " />
+      <item msgid="QUERY:  " msgstr="查詢: " />
+      <item msgid="STATEMENT:  " msgstr="陳述式:" />
+      <item msgid="rule %s on " msgstr="規則 %s 於" />
+      <item msgid="trigger %s on " msgstr="觸發程序 %s 於" />
+    </check>
+  </file>
+</whitelist>
