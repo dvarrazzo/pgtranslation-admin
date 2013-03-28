@@ -1,192 +1,324 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <whitelist>
+  <file filename="de/pg_basebackup.po">
+    <check name="LongOption">
+      <item msgid="%s: invalid xlog-method option &quot;%s&quot;, must be &quot;fetch&quot; or &quot;stream&quot;&#10;" msgstr="%s: ungültige Option „%s“ für --xlog-method, muss „fetch“ oder „stream“ sein&#10;"/>
+    </check>
+  </file>
   <file filename="fa/psql.po">
     <check name="SuffixWhitespace">
-      <item msgid="Password: " msgstr="رمز عبور:" />
-      <item msgid="SSL connection (cipher: %s, bits: %i)&#10;&#10;" msgstr="اتصال SSL (رمز : %s ، بیتها: %i) &#10;" />
-      <item msgid="The connection to the server was lost. Attempting reset: " msgstr="ارتباط با سرور قطع شد. سعی در برقراری مجدد ارتباط:" />
-      <item msgid="User name: " msgstr="نام کاربری :" />
-      <item msgid="primary key, " msgstr="کلید اصلی،" />
-      <item msgid="unique, " msgstr="یکتا،" />
+      <item msgid="Password: " msgstr="رمز عبور:"/>
+      <item msgid="SSL connection (cipher: %s, bits: %i)&#10;&#10;" msgstr="اتصال SSL (رمز : %s ، بیتها: %i) &#10;"/>
+      <item msgid="The connection to the server was lost. Attempting reset: " msgstr="ارتباط با سرور قطع شد. سعی در برقراری مجدد ارتباط:"/>
+      <item msgid="User name: " msgstr="نام کاربری :"/>
+      <item msgid="primary key, " msgstr="کلید اصلی،"/>
+      <item msgid="unique, " msgstr="یکتا،"/>
     </check>
   </file>
   <file filename="fr/libpq.po">
     <check name="SuffixWhitespace">
-      <item msgid="LOCATION:  " msgstr="EMPLACEMENT : " />
+      <item msgid="LOCATION:  " msgstr="EMPLACEMENT : "/>
+    </check>
+  </file>
+  <file filename="fr/pg_dump.po">
+    <check name="LongOption">
+      <item msgid="Consider using a full dump instead of a --data-only dump to avoid this problem.&#10;" msgstr="Considérez l'utilisation d'une sauvegarde complète au lieu d'une sauvegarde&#10;des données seulement pour éviter ce problème.&#10;"/>
+    </check>
+    <check name="ShortOption">
+      <item msgid="%s: cannot specify both --single-transaction and multiple jobs&#10;" msgstr="%s : les options --single-transaction et -j ne peuvent pas être indiquées&#10;simultanément&#10;"/>
+    </check>
+  </file>
+  <file filename="hr/libpq.po">
+    <check name="ShortOption">
+      <item msgid="could not connect to server: %s&#10;&#9;Is the server running locally and accepting&#10;&#9;connections on Unix domain socket &quot;%s&quot;?&#10;" msgstr="neuspješno uspostavljanje veze sa serverom: %s&#10;&#9;Je li server pokrenut lokalno i prihvaća&#10;&#9;veze na 'Unix domain socket'-u &quot;%s&quot;?&#10;"/>
+      <item msgid="could not connect to server: %s&#10;&#9;Is the server running on host &quot;%s&quot; and accepting&#10;&#9;TCP/IP connections on port %s?&#10;" msgstr="neuspjelo uspostavljanje veze sa serverom: %s&#10;&#9;Je li server pokrenut na 'host'-u &quot;%s&quot; i prihvaća&#10;&#9;TCP/IP veze na portu %s?&#10;"/>
+      <item msgid="could not create large object for file &quot;%s&quot;&#10;" msgstr="neuspjelo kreiranje 'large object'-a za datoteku  &quot;%s&quot;&#10;"/>
+      <item msgid="could not create socket: %s&#10;" msgstr="neuspješno kreiranje 'socket'-a: %s&#10;"/>
+      <item msgid="could not get client address from socket: %s&#10;" msgstr="neuspješno čitanje adrese klijenta na 'socket'-u: %s&#10;"/>
+      <item msgid="could not get information about host (%s): %s&#10;" msgstr="neuspjelo čitanje informacija o 'host'-u (%s): %s&#10;"/>
+      <item msgid="could not get socket error status: %s&#10;" msgstr="neuspješno čitanje status greške 'socket'-a: %s&#10;"/>
+      <item msgid="could not open large object %u&#10;" msgstr="neuspjelo otvaranje 'large object'-a %u&#10;"/>
+      <item msgid="could not restore non-blocking mode on socket: %s&#10;" msgstr="neuspješno restauriranje neblokirajućeg moda na 'socket'-u: %s&#10;"/>
+      <item msgid="could not set socket to TCP no delay mode: %s&#10;" msgstr="neuspješno setiranje 'socket'-a u 'TCP no delay' mod: %s&#10;"/>
+      <item msgid="could not set socket to blocking mode: %s&#10;" msgstr="neuspjelo setiranje 'socket'-a u neblokirajući mod: %s&#10;"/>
+      <item msgid="could not set socket to non-blocking mode: %s&#10;" msgstr="neuspjelo setiranje 'socket'-a u neblokirajući mod: %s&#10;"/>
+      <item msgid="could not translate hostname &quot;%s&quot; to address: %s&#10;" msgstr="neuspješno prevođenje imena 'host'-a &quot;%s&quot; u adresu: %s&#10;"/>
+      <item msgid="error querying socket: %s&#10;" msgstr="greška kod ispitivanja 'socket'-a: %s&#10;"/>
+    </check>
+  </file>
+  <file filename="hr/postgres.po">
+    <check name="ShortOption">
+      <item msgid="%s() was not fired by trigger manager" msgstr="%s() nije pokrenut od strane 'trigger manager'-a"/>
+      <item msgid="(The owning user of the socket is always the user that starts the server.)" msgstr="(Vlasnik 'socket'-a je uvijek korisnik koji je startao server.)"/>
+      <item msgid="By default, connection logs only show the IP address of the connecting host. If you want them to show the host name you can turn this on, but depending on your host name resolution setup it might impose a non-negligible performance penalty" msgstr="Inicijalno log veze prikazuje samo IP adresu 'host'-a. Ako želite prikazati ime 'host'-a, možete uključiti ovu opciju, ali zavisno od vaših 'host name resolution' postavki možete očekivati znatan gubitak performansi."/>
+      <item msgid="Do REINDEX in standalone postgres with -P -O options." msgstr="Napravite REINDEX u samostojećem postgres-u  sa -O -P opcijama."/>
+      <item msgid="Log hostname to connection logs" msgstr="Zapisivanje imena 'host'-a u log veza"/>
+      <item msgid="Log outgoing port number of the connecting host" msgstr="Zapisivanje broja porta na 'host'-u"/>
+      <item msgid="REINDEX DATABASE must be done in standalone postgres with -P -O options" msgstr="REINDEX DATABASE mora biti napravljen u samostojećem postgres-u  sa -O -P opcijama."/>
+      <item msgid="Shared libraries to preload into postmaster" msgstr="Biblioteke koje će biti učitane prilikom podizanja 'postmaster'-a"/>
+      <item msgid="bad checksum of backup block %d in record at %X/%X" msgstr="pogrešan kontrolni zbroj 'backup block'-a %d za slog %X/%X"/>
+      <item msgid="bit string length %d does not match type bit(%d)" msgstr="dužina 'string'-a %d ne odgovara tipu ' bit(%d)'"/>
+      <item msgid="cannot create bounding box for empty polygon" msgstr="nemoguće kreiranje 'bounding box'-a za prazan 'polygon'"/>
+      <item msgid="cannot open multi-query plan as cursor" msgstr="neuspješno otvaranje višestrukog 'query plan'-a kao kursor(cursor)"/>
+      <item msgid="cannot pass result of sub-select or join %s to a function" msgstr="nemoguće proslijediti rezultat 'sub-select'-a ili 'join'-a %s u funkciju"/>
+      <item msgid="cannot use sub-select in EXECUTE parameter" msgstr="nedozvoljeno korištenje 'subselect'-a u EXECUTE parametrima"/>
+      <item msgid="could not bind %s socket: %m" msgstr="neuspjelo vezanje %s 'socket'-a: %m"/>
+      <item msgid="could not bind socket for statistics: %m" msgstr="neuspjelo vezanje 'socket'-a za statistiku: %m"/>
+      <item msgid="could not connect socket for statistics: %m" msgstr="neuspješno spajanje 'socket'-a za statistiku: %m"/>
+      <item msgid="could not create %s socket: %m" msgstr="neuspješno kreiranje %s 'socket'-a: %m"/>
+      <item msgid="could not create TCP/IP listen socket" msgstr="neuspješno kreiranje 'TCP/IP listen socket'-a"/>
+      <item msgid="could not create UNIX stream port" msgstr="neuspješno kreiranje 'UNIX stream port'-a"/>
+      <item msgid="could not create listen socket for &quot;%s&quot;" msgstr="neuspješno kreiranje 'listen socket'-a za &quot;%s&quot;"/>
+      <item msgid="could not create pipe for statistics buffer: %m" msgstr="neuspješno kreiranje  'pipe for statistics buffer'-a: %m"/>
+      <item msgid="could not create pipe for statistics collector: %m" msgstr="neuspješno kreiranje  'pipe for statistics buffer'-a: %m"/>
+      <item msgid="could not create socket for statistics: %m" msgstr="neuspjelo kreiranje 'socket'-a za statistiku: %m"/>
+      <item msgid="could not fork statistics collector: %m" msgstr="neuspješno račvanje 'statistics collector'-a: %m"/>
+      <item msgid="could not get address of socket for statistics: %m" msgstr="neuspjelo čitanje adrese 'socket'-a za statistiku: %m"/>
+      <item msgid="could not listen on %s socket: %m" msgstr="neuspjelo osluškivanje na %s 'socket'-u: %m"/>
+      <item msgid="could not set statistics socket to nonblock mode: %m" msgstr="neuspješno setiranje statističkog 'socket'-a u neblokirajući mod: %m"/>
+      <item msgid="insufficient file descriptors available to start backend" msgstr="nedovoljno 'file descriptor'-a za startanje 'backend' procesa"/>
+      <item msgid="invalid destination encoding name &quot;%s&quot;" msgstr="pogrešno ciljno ime 'encoding'-a &quot;%s&quot;"/>
+      <item msgid="invalid length in external bit string" msgstr="pogrešna duljina u vanjskom 'bit string'-u"/>
+      <item msgid="invalid macro name in dynamic library path" msgstr="pogrešno ime makroa u 'dynamic library path'-u"/>
+      <item msgid="invalid number of points in external polygon" msgstr="pogrešan broj točaka(points) u 'external polygon'-u"/>
+      <item msgid="invalid source encoding name &quot;%s&quot;" msgstr="pogrešno izvorno ime 'encoding'-a  &quot;%s&quot;"/>
+      <item msgid="invalid status in external tinterval" msgstr="pogrešan status u vanjskom 'tinterval'-u"/>
+      <item msgid="negative substring length not allowed" msgstr="negativna dužina 'substring'-a nije dozvoljena"/>
+      <item msgid="out of file descriptors: %m; release and retry" msgstr="nedostatak 'file descriptor'-a: %m; oslobodite pa pokušajte ponovo"/>
+      <item msgid="query-level statistics are disabled because parser, planner, or executor statistics are on" msgstr="statistika upita je isključena jer je statistika  'parser'-a, 'planner'-a, ili 'executor'-a uključena."/>
+      <item msgid="select failed in postmaster: %m" msgstr="'select' neuspješan u 'postmaster'-u: %m"/>
+      <item msgid="the number of buffers (-B) must be at least twice the number of allowed connections (-N) and at least 16" msgstr="Broj 'buffers'-a (-B) mora biti najmanje dva puta veći od broja dozvoljenih veza(connections) (-N) a najmanje 16"/>
+      <item msgid="unnamed constraints cannot be set explicitly" msgstr="neimenovani 'constraint'-i nemogu biti zadani eksplicitno"/>
+    </check>
+  </file>
+  <file filename="hu/postgres.po">
+    <check name="ShortOption">
+      <item msgid="&quot;%s&quot; is a system index. call REINDEX under standalone postgres with -P -O options" msgstr="A(z) &quot;%s&quot; rendszerindex. A REINDEX utasítást kell meghívni parancssorból indított, -O -P opciókkal futtatott postgresből"/>
+      <item msgid="Attribute '%s' has an unknown type&#10;&#9;Proceeding with relation creation anyway" msgstr="A(z) '%s' attributum ismeretlen típusú&#10;&#9;Automatikus reláció-létrehozás"/>
+      <item msgid="must be called under standalone postgres with -P -O options" msgstr="parancssorból indított, -O -P opciókkal futtatott postgresből hívható csak"/>
+    </check>
+  </file>
+  <file filename="hu/psql.po">
+    <check name="ShortOption">
+      <item msgid="&#10;For more information, type &quot;\?&quot; (for internal commands) or &quot;\help&quot;&#10;(for SQL commands) from within psql, or consult the psql section in&#10;the PostgreSQL documentation.&#10;&#10;Report bugs to &lt;pgsql-bugs@postgresql.org&gt;." msgstr="&#10;További informácihozz üss &quot;\?&quot;-t (belso parancsokhoz) vagy &quot;\help&quot;-t&#10;(SQL parancsokhoz) a psqlben, vagy olvasd el a psqlrol szoló részt&#10;a PostgreSQL dokumentációjában.&#10;&#10;Hibákat a &lt;pgsql-bugs@postgresql.org&gt;címen tudsz jelenteni."/>
+      <item msgid="No help available for '%-.*s'.&#10;Try \h with no arguments to see available help.&#10;" msgstr="'%-.*s'-h(oeö) nincs segítség.&#10;Próbáld a \h-t paraméter nélkül a rendelkezésre álló segítség megtekintéséhez.&#10;"/>
+      <item msgid="\%s: could not change directory to '%s': %s&#10;" msgstr="\%s: nem sikerült a könyvtárváltás '%s'-b(ae): %s&#10;"/>
     </check>
   </file>
   <file filename="ja/initdb.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="再入力してください:" />
-      <item msgid="Enter new superuser password: " msgstr="新しいスーパーユーザのパスワードを入力してください:" />
+      <item msgid="Enter it again: " msgstr="再入力してください:"/>
+      <item msgid="Enter new superuser password: " msgstr="新しいスーパーユーザのパスワードを入力してください:"/>
     </check>
   </file>
   <file filename="ja/pgscripts.po">
     <check name="SuffixWhitespace">
-      <item msgid="%s (%s/%s) " msgstr="%s (%s/%s)" />
-      <item msgid="Enter it again: " msgstr="もう一度入力してください：" />
-      <item msgid="Enter name of role to add: " msgstr="追加したいロール名を入力：" />
-      <item msgid="Enter name of role to drop: " msgstr="削除したいロール名を入力：" />
+      <item msgid="%s (%s/%s) " msgstr="%s (%s/%s)"/>
+      <item msgid="Enter it again: " msgstr="もう一度入力してください："/>
+      <item msgid="Enter name of role to add: " msgstr="追加したいロール名を入力："/>
+      <item msgid="Enter name of role to drop: " msgstr="削除したいロール名を入力："/>
     </check>
   </file>
   <file filename="ja/postgres.po">
     <check name="SuffixWhitespace">
-      <item msgid="could not fork new process for connection: " msgstr="接続用の新しいプロセスをforkできませんでした" />
-      <item msgid="rule %s on " msgstr="のルール %s" />
-      <item msgid="trigger %s on " msgstr="トリガ %s、対象:" />
+      <item msgid="could not fork new process for connection: " msgstr="接続用の新しいプロセスをforkできませんでした"/>
+      <item msgid="rule %s on " msgstr="のルール %s"/>
+      <item msgid="trigger %s on " msgstr="トリガ %s、対象:"/>
     </check>
   </file>
   <file filename="ja/psql.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="もう一度入力してください：" />
-      <item msgid="Password valid until " msgstr="パスワード有効期限" />
+      <item msgid="Enter it again: " msgstr="もう一度入力してください："/>
+      <item msgid="Password valid until " msgstr="パスワード有効期限"/>
     </check>
   </file>
   <file filename="ko/initdb.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="암호 확인:" />
-      <item msgid="Enter new superuser password: " msgstr="새 superuser 암호를 입력하십시오:" />
-      <item msgid="copying template1 to postgres ... " msgstr="template1 데이터베이스를 postgres 데이터베이스로 복사 중 ..." />
-      <item msgid="copying template1 to template0 ... " msgstr="template1 데이터베이스를 template0 데이터베이스로 복사 중 ..." />
-      <item msgid="creating configuration files ... " msgstr="환경설정 파일을 만드는 중 ..." />
-      <item msgid="creating conversions ... " msgstr="인코딩 변환규칙(conversion)들을 만드는 중 ..." />
-      <item msgid="creating directory %s ... " msgstr="%s 디렉터리 만드는 중 ..." />
-      <item msgid="creating information schema ... " msgstr="information schema 만드는 중 ..." />
-      <item msgid="creating subdirectories ... " msgstr="하위 디렉터리 만드는 중 ..." />
-      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 안에 template1 데이터베이스를 만드는 중 ..." />
-      <item msgid="fixing permissions on existing directory %s ... " msgstr="이미 있는 %s 디렉터리의 액세스 권한을 고치는 중 ..." />
-      <item msgid="initializing dependencies ... " msgstr="의존성 정보 초기화 중 ..." />
-      <item msgid="initializing pg_authid ... " msgstr="pg_authid 초기화 중 ..." />
-      <item msgid="loading system objects' descriptions ... " msgstr="시스템 개체들 설명 자료 입력 중 ..." />
-      <item msgid="selecting default max_connections ... " msgstr="max_connections 초기값을 선택하는 중 ..." />
-      <item msgid="setting password ... " msgstr="암호 설정 중 ..." />
-      <item msgid="vacuuming database template1 ... " msgstr="template1 데이터베이스 청소 중 ..." />
+      <item msgid="Enter it again: " msgstr="암호 확인:"/>
+      <item msgid="Enter new superuser password: " msgstr="새 superuser 암호를 입력하십시오:"/>
+      <item msgid="copying template1 to postgres ... " msgstr="template1 데이터베이스를 postgres 데이터베이스로 복사 중 ..."/>
+      <item msgid="copying template1 to template0 ... " msgstr="template1 데이터베이스를 template0 데이터베이스로 복사 중 ..."/>
+      <item msgid="creating configuration files ... " msgstr="환경설정 파일을 만드는 중 ..."/>
+      <item msgid="creating conversions ... " msgstr="인코딩 변환규칙(conversion)들을 만드는 중 ..."/>
+      <item msgid="creating directory %s ... " msgstr="%s 디렉터리 만드는 중 ..."/>
+      <item msgid="creating information schema ... " msgstr="information schema 만드는 중 ..."/>
+      <item msgid="creating subdirectories ... " msgstr="하위 디렉터리 만드는 중 ..."/>
+      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 안에 template1 데이터베이스를 만드는 중 ..."/>
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="이미 있는 %s 디렉터리의 액세스 권한을 고치는 중 ..."/>
+      <item msgid="initializing dependencies ... " msgstr="의존성 정보 초기화 중 ..."/>
+      <item msgid="initializing pg_authid ... " msgstr="pg_authid 초기화 중 ..."/>
+      <item msgid="loading system objects' descriptions ... " msgstr="시스템 개체들 설명 자료 입력 중 ..."/>
+      <item msgid="selecting default max_connections ... " msgstr="max_connections 초기값을 선택하는 중 ..."/>
+      <item msgid="setting password ... " msgstr="암호 설정 중 ..."/>
+      <item msgid="vacuuming database template1 ... " msgstr="template1 데이터베이스 청소 중 ..."/>
+    </check>
+  </file>
+  <file filename="ko/pg_ctl.po">
+    <check name="ShortOption">
+      <item msgid="%s: no database directory specified and environment variable PGDATA unset&#10;" msgstr="%s: -D 옵션도 없고, PGDATA 환경변수값도 지정되어 있지 않습니다.&#10;"/>
     </check>
   </file>
   <file filename="ko/pgscripts.po">
+    <check name="ShortOption">
+      <item msgid="%s: cannot vacuum all databases and a specific one at the same time&#10;" msgstr="%s: -a 옵션이 있을 경우는 한 데이터베이스를 대상으로 작업을 진행할 수 없습니다.&#10;"/>
+    </check>
     <check name="SuffixWhitespace">
-      <item msgid="Password: " msgstr="암호:" />
+      <item msgid="Password: " msgstr="암호:"/>
     </check>
   </file>
   <file filename="ko/postgres.po">
     <check name="SuffixWhitespace">
-      <item msgid="QUERY:  " msgstr="쿼리:" />
+      <item msgid="QUERY:  " msgstr="쿼리:"/>
     </check>
   </file>
   <file filename="ko/psql.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="다시 입력해 주세요:" />
-      <item msgid="Enter new password: " msgstr="새 암호를 입력하세요:" />
+      <item msgid="Enter it again: " msgstr="다시 입력해 주세요:"/>
+      <item msgid="Enter new password: " msgstr="새 암호를 입력하세요:"/>
+    </check>
+  </file>
+  <file filename="ro/pg_dump.po">
+    <check name="LongOption">
+      <item msgid="internal error -- neither th nor fh specified in tarReadRaw()&#10;" msgstr="eroare internă --nu a fost specificat nici th, nici fh în ReadRaw()&#10;"/>
+    </check>
+  </file>
+  <file filename="sv/libpq.po">
+    <check name="ShortOption">
+      <item msgid="could not set socket to close-on-exec mode: %s&#10;" msgstr="kunde inte ställa in uttag (socket) i &quot;close-on-exec&quot;-läge: %s&#10;"/>
+    </check>
+  </file>
+  <file filename="sv/pg_ctl.po">
+    <check name="ShortOption">
+      <item msgid="%s: missing arguments for kill mode&#10;" msgstr="%s: saknar argumentet till &quot;kill&quot;-läget&#10;"/>
+    </check>
+  </file>
+  <file filename="sv/pg_dump.po">
+    <check name="LongOption">
+      <item msgid="%s: options -g/--globals-only and -r/--roles-only cannot be used together&#10;" msgstr="%s: flaggorna &quot;bara gobala&quot; (-g) och &quot;bara roller&quot; (-r) kan inte användas tillsammans&#10;"/>
+      <item msgid="%s: options -g/--globals-only and -t/--tablespaces-only cannot be used together&#10;" msgstr="%s: flaggorna &quot;bara globala&quot; (-g) och &quot;bara tabellutrymmen&quot; (-t) kan inte användas tillsammans&#10;"/>
+      <item msgid="%s: options -r/--roles-only and -t/--tablespaces-only cannot be used together&#10;" msgstr="%s: flaggorna &quot;bara roller&quot; (-r) och &quot;bara tabellutrymmen&quot; (-t) kan inte användas tillsammans&#10;"/>
+      <item msgid="options -c/--clean and -a/--data-only cannot be used together&#10;" msgstr="flaggorna &quot;nollställ&quot; (-c) och &quot;bara data&quot; (-a) kan inte användas tillsammans&#10;"/>
+      <item msgid="options -s/--schema-only and -a/--data-only cannot be used together&#10;" msgstr="flaggorna &quot;bara schema&quot; (-s) och &quot;bara data&quot; (-a) kan inte användas tillsammans&#10;"/>
+    </check>
+  </file>
+  <file filename="sv/postgres.po">
+    <check name="ShortOption">
+      <item msgid="could not format &quot;path&quot; value" msgstr="kunde inte formattera &quot;path&quot;-värde"/>
+      <item msgid="shared table &quot;%s&quot; can only be reindexed in stand-alone mode" msgstr="delad tabell &quot;%s&quot; kan bara omindexeras i &quot;stand-alone&quot;-läge"/>
     </check>
   </file>
   <file filename="ta/initdb.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="மீண்டும் பதியவும்:" />
-      <item msgid="Enter new superuser password: " msgstr="புதிய முதன்மைப் பயனர் கடவுச் சொல்லை பதியவும்:" />
-      <item msgid="copying template1 to postgres ... " msgstr="வார்ப்பு1  போஸ்ட்க்ரெஸுக்கு நகலெடுக்கப் படுகின்றது" />
-      <item msgid="copying template1 to template0 ... " msgstr="வார்ப்பு1  வார்ப்பு0 க்கு நகலெடுக்கப் படுகின்றது ..." />
-      <item msgid="creating configuration files ... " msgstr="வடிவமைப்புக் கோப்புகள் உருவாக்கப் படுகின்றன ..." />
-      <item msgid="creating conversions ... " msgstr="மாற்றங்கள் உருவாக்கப் படுகின்றன..." />
-      <item msgid="creating dictionaries ... " msgstr="அகராதிகள் உருவாக்கப் படுகின்றன..." />
-      <item msgid="creating directory %s ... " msgstr="%s அடைவு உருவாக்கப் படுகிறது..." />
-      <item msgid="creating information schema ... " msgstr="தகவல் ஸ்கீமா  உருவாக்கப் படுகின்றாது ..." />
-      <item msgid="creating subdirectories ... " msgstr="துணையடைவுகள் உருவாக்கப் படுகின்றன ..." />
-      <item msgid="creating system views ... " msgstr="அமைப்பு பார்வைகள் உருவாக்கப் படுகின்றன ..." />
-      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 ல் வார்ப்பு1  தரவுக் களன் உருவாக்கப் படுகிறது ..." />
-      <item msgid="fixing permissions on existing directory %s ... " msgstr="இருக்கக் கூடிய அடைவுகளில் உரிமங்கள் சரிசெய்யப் படுகின்றன %s ..." />
-      <item msgid="initializing dependencies ... " msgstr="சார்புடைமைகள் துவக்கப்படுகின்றன ..." />
-      <item msgid="initializing pg_authid ... " msgstr="pg_authid துவக்கப் படுகின்றது ..." />
-      <item msgid="loading system objects' descriptions ... " msgstr="வன் பொருட்களின் விவரங்கள் ஏற்றப்படுகின்றன..." />
-      <item msgid="selecting default max_connections ... " msgstr="இயல்பிருப்பாக இருக்க வேண்டிய max_connections தேர்வு செய்யப் படுகின்றது ..." />
-      <item msgid="selecting default shared_buffers/max_fsm_pages ... " msgstr="இயல்பிருப்பு shared_buffers/max_fsm_pages தேர்வு செய்யப் படுகின்றது ..." />
-      <item msgid="setting password ... " msgstr="கடவுச் சொல் அமைக்கப்படுகின்றது..." />
-      <item msgid="setting privileges on built-in objects ... " msgstr="உருவாக்கப் பட்டிருக்கும் பொருட்களுக்கு சலுகைகள்  அமைக்கப் படுகின்றன ..." />
-      <item msgid="vacuuming database template1 ... " msgstr="தரவுக் களத்தின் வார்ப்பு காலியாக்கப் படுகின்றது ..." />
+      <item msgid="Enter it again: " msgstr="மீண்டும் பதியவும்:"/>
+      <item msgid="Enter new superuser password: " msgstr="புதிய முதன்மைப் பயனர் கடவுச் சொல்லை பதியவும்:"/>
+      <item msgid="copying template1 to postgres ... " msgstr="வார்ப்பு1  போஸ்ட்க்ரெஸுக்கு நகலெடுக்கப் படுகின்றது"/>
+      <item msgid="copying template1 to template0 ... " msgstr="வார்ப்பு1  வார்ப்பு0 க்கு நகலெடுக்கப் படுகின்றது ..."/>
+      <item msgid="creating configuration files ... " msgstr="வடிவமைப்புக் கோப்புகள் உருவாக்கப் படுகின்றன ..."/>
+      <item msgid="creating conversions ... " msgstr="மாற்றங்கள் உருவாக்கப் படுகின்றன..."/>
+      <item msgid="creating dictionaries ... " msgstr="அகராதிகள் உருவாக்கப் படுகின்றன..."/>
+      <item msgid="creating directory %s ... " msgstr="%s அடைவு உருவாக்கப் படுகிறது..."/>
+      <item msgid="creating information schema ... " msgstr="தகவல் ஸ்கீமா  உருவாக்கப் படுகின்றாது ..."/>
+      <item msgid="creating subdirectories ... " msgstr="துணையடைவுகள் உருவாக்கப் படுகின்றன ..."/>
+      <item msgid="creating system views ... " msgstr="அமைப்பு பார்வைகள் உருவாக்கப் படுகின்றன ..."/>
+      <item msgid="creating template1 database in %s/base/1 ... " msgstr="%s/base/1 ல் வார்ப்பு1  தரவுக் களன் உருவாக்கப் படுகிறது ..."/>
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="இருக்கக் கூடிய அடைவுகளில் உரிமங்கள் சரிசெய்யப் படுகின்றன %s ..."/>
+      <item msgid="initializing dependencies ... " msgstr="சார்புடைமைகள் துவக்கப்படுகின்றன ..."/>
+      <item msgid="initializing pg_authid ... " msgstr="pg_authid துவக்கப் படுகின்றது ..."/>
+      <item msgid="loading system objects' descriptions ... " msgstr="வன் பொருட்களின் விவரங்கள் ஏற்றப்படுகின்றன..."/>
+      <item msgid="selecting default max_connections ... " msgstr="இயல்பிருப்பாக இருக்க வேண்டிய max_connections தேர்வு செய்யப் படுகின்றது ..."/>
+      <item msgid="selecting default shared_buffers/max_fsm_pages ... " msgstr="இயல்பிருப்பு shared_buffers/max_fsm_pages தேர்வு செய்யப் படுகின்றது ..."/>
+      <item msgid="setting password ... " msgstr="கடவுச் சொல் அமைக்கப்படுகின்றது..."/>
+      <item msgid="setting privileges on built-in objects ... " msgstr="உருவாக்கப் பட்டிருக்கும் பொருட்களுக்கு சலுகைகள்  அமைக்கப் படுகின்றன ..."/>
+      <item msgid="vacuuming database template1 ... " msgstr="தரவுக் களத்தின் வார்ப்பு காலியாக்கப் படுகின்றது ..."/>
     </check>
   </file>
   <file filename="ta/libpq.po">
     <check name="SuffixWhitespace">
-      <item msgid="LOCATION:  " msgstr="இருப்பிடம்: " />
+      <item msgid="LOCATION:  " msgstr="இருப்பிடம்: "/>
     </check>
   </file>
   <file filename="ta/pgscripts.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="மீண்டும் உள்ளிடவும்:" />
-      <item msgid="Enter password for new role: " msgstr="புதியப் பொறுப்பிற்கானகானக் கடவுச் சொல்லினைக் காட்டுக:" />
-      <item msgid="Password: " msgstr="கடவுச்சொல்:" />
+      <item msgid="Enter it again: " msgstr="மீண்டும் உள்ளிடவும்:"/>
+      <item msgid="Enter password for new role: " msgstr="புதியப் பொறுப்பிற்கானகானக் கடவுச் சொல்லினைக் காட்டுக:"/>
+      <item msgid="Password: " msgstr="கடவுச்சொல்:"/>
     </check>
   </file>
   <file filename="zh_CN/ecpg.po">
     <check name="SuffixWhitespace">
-      <item msgid="ERROR: " msgstr="错误:" />
-      <item msgid="WARNING: " msgstr="警告:" />
+      <item msgid="ERROR: " msgstr="错误:"/>
+      <item msgid="WARNING: " msgstr="警告:"/>
     </check>
   </file>
   <file filename="zh_CN/libpq.po">
     <check name="SuffixWhitespace">
-      <item msgid="LINE %d: " msgstr="第%d行" />
+      <item msgid="LINE %d: " msgstr="第%d行"/>
     </check>
   </file>
   <file filename="zh_CN/psql.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter it again: " msgstr="再次键入：" />
-      <item msgid="Enter new password: " msgstr="输入新的密码：" />
-      <item msgid="Password for user %s: " msgstr="用户 %s 的口令：" />
-      <item msgid="Password valid until " msgstr="密码有效直至" />
-      <item msgid="Password: " msgstr="口令：" />
-      <item msgid="primary key, " msgstr="主键(PK)," />
-      <item msgid="unique, " msgstr="唯一的," />
+      <item msgid="Enter it again: " msgstr="再次键入："/>
+      <item msgid="Enter new password: " msgstr="输入新的密码："/>
+      <item msgid="Password for user %s: " msgstr="用户 %s 的口令："/>
+      <item msgid="Password valid until " msgstr="密码有效直至"/>
+      <item msgid="Password: " msgstr="口令："/>
+      <item msgid="primary key, " msgstr="主键(PK),"/>
+      <item msgid="unique, " msgstr="唯一的,"/>
     </check>
   </file>
   <file filename="zh_TW/ecpg.po">
     <check name="SuffixWhitespace">
-      <item msgid="ERROR: " msgstr="錯誤:" />
-      <item msgid="WARNING: " msgstr="警告:" />
+      <item msgid="ERROR: " msgstr="錯誤:"/>
+      <item msgid="WARNING: " msgstr="警告:"/>
     </check>
   </file>
   <file filename="zh_TW/initdb.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter new superuser password: " msgstr="輸入新的管理者密碼：" />
-      <item msgid="copying template1 to postgres ... " msgstr="複製 template1 到 postgres..." />
-      <item msgid="copying template1 to template0 ... " msgstr="複製 template1 到 template0 ..." />
-      <item msgid="creating configuration files ... " msgstr="建立設定檔..." />
-      <item msgid="creating dictionaries ... " msgstr="建立字典..." />
-      <item msgid="creating directory %s ... " msgstr="建立目錄 %s ..." />
-      <item msgid="creating subdirectories ... " msgstr="建立子目錄..." />
-      <item msgid="creating system views ... " msgstr="建立系統views..." />
-      <item msgid="fixing permissions on existing directory %s ... " msgstr="修正現有目錄 %s 的權限..." />
-      <item msgid="initializing dependencies ... " msgstr="初始化相依性..." />
-      <item msgid="initializing pg_authid ... " msgstr="初始化 pg_authid..." />
-      <item msgid="loading PL/pgSQL server-side language ... " msgstr="載入 PL/pgSQL 伺服器端語言 ..." />
-      <item msgid="loading system objects' descriptions ... " msgstr="正在載入系統物件的描述..." />
-      <item msgid="selecting default max_connections ... " msgstr="選擇預設的max_connections ..." />
-      <item msgid="selecting default shared_buffers ... " msgstr="選擇預設的shared_buffers ..." />
-      <item msgid="setting password ... " msgstr="設定密碼..." />
-      <item msgid="vacuuming database template1 ... " msgstr="重整資料庫template1 ..." />
+      <item msgid="Enter new superuser password: " msgstr="輸入新的管理者密碼："/>
+      <item msgid="copying template1 to postgres ... " msgstr="複製 template1 到 postgres..."/>
+      <item msgid="copying template1 to template0 ... " msgstr="複製 template1 到 template0 ..."/>
+      <item msgid="creating configuration files ... " msgstr="建立設定檔..."/>
+      <item msgid="creating dictionaries ... " msgstr="建立字典..."/>
+      <item msgid="creating directory %s ... " msgstr="建立目錄 %s ..."/>
+      <item msgid="creating subdirectories ... " msgstr="建立子目錄..."/>
+      <item msgid="creating system views ... " msgstr="建立系統views..."/>
+      <item msgid="fixing permissions on existing directory %s ... " msgstr="修正現有目錄 %s 的權限..."/>
+      <item msgid="initializing dependencies ... " msgstr="初始化相依性..."/>
+      <item msgid="initializing pg_authid ... " msgstr="初始化 pg_authid..."/>
+      <item msgid="loading PL/pgSQL server-side language ... " msgstr="載入 PL/pgSQL 伺服器端語言 ..."/>
+      <item msgid="loading system objects' descriptions ... " msgstr="正在載入系統物件的描述..."/>
+      <item msgid="selecting default max_connections ... " msgstr="選擇預設的max_connections ..."/>
+      <item msgid="selecting default shared_buffers ... " msgstr="選擇預設的shared_buffers ..."/>
+      <item msgid="setting password ... " msgstr="設定密碼..."/>
+      <item msgid="vacuuming database template1 ... " msgstr="重整資料庫template1 ..."/>
     </check>
   </file>
   <file filename="zh_TW/libpq.po">
     <check name="SuffixWhitespace">
-      <item msgid="LINE %d: " msgstr="行 %d:" />
-      <item msgid="LOCATION:  " msgstr="位置:" />
+      <item msgid="LINE %d: " msgstr="行 %d:"/>
+      <item msgid="LOCATION:  " msgstr="位置:"/>
+    </check>
+  </file>
+  <file filename="zh_TW/pg_dump.po">
+    <check name="LongOption">
+      <item msgid="&#10;If -f/--file is not used, then the SQL script will be written to the standard&#10;output.&#10;&#10;" msgstr="&#10;If -f/--檔案未使用，SQL 指令碼將寫至標準&#10;輸出。&#10;&#10;"/>
     </check>
   </file>
   <file filename="zh_TW/pgscripts.po">
     <check name="SuffixWhitespace">
-      <item msgid="Enter name of role to add: " msgstr="輸入新身份的名稱:" />
-      <item msgid="Enter name of role to drop: " msgstr="輸入要刪除的身份:" />
-      <item msgid="Enter password for new role: " msgstr="輸入新身份的密碼:" />
+      <item msgid="Enter name of role to add: " msgstr="輸入新身份的名稱:"/>
+      <item msgid="Enter name of role to drop: " msgstr="輸入要刪除的身份:"/>
+      <item msgid="Enter password for new role: " msgstr="輸入新身份的密碼:"/>
     </check>
   </file>
   <file filename="zh_TW/postgres.po">
     <check name="SuffixWhitespace">
-      <item msgid="CONTEXT:  " msgstr="上下文:" />
-      <item msgid="DETAIL:  " msgstr="詳細: " />
-      <item msgid="HINT:  " msgstr="提示: " />
-      <item msgid="QUERY:  " msgstr="查詢: " />
-      <item msgid="STATEMENT:  " msgstr="陳述式:" />
-      <item msgid="rule %s on " msgstr="規則 %s 於" />
-      <item msgid="trigger %s on " msgstr="觸發程序 %s 於" />
+      <item msgid="CONTEXT:  " msgstr="上下文:"/>
+      <item msgid="DETAIL:  " msgstr="詳細: "/>
+      <item msgid="HINT:  " msgstr="提示: "/>
+      <item msgid="QUERY:  " msgstr="查詢: "/>
+      <item msgid="STATEMENT:  " msgstr="陳述式:"/>
+      <item msgid="rule %s on " msgstr="規則 %s 於"/>
+      <item msgid="trigger %s on " msgstr="觸發程序 %s 於"/>
     </check>
   </file>
 </whitelist>
