@@ -4,7 +4,27 @@
       <item msgid="%s: invalid xlog-method option &quot;%s&quot;, must be &quot;fetch&quot; or &quot;stream&quot;&#10;" msgstr="%s: ungültige Option „%s“ für --xlog-method, muss „fetch“ oder „stream“ sein&#10;"/>
     </check>
   </file>
+  <file filename="de/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="  -P, --pset=VAR[=ARG]     set printing option VAR to ARG (see \pset command)&#10;" msgstr="  -P, --pset=VAR[=ARG]     Ausgabeoption VAR auf ARG setzen (siehe&#10;                           \pset-Anweisung)&#10;"/>
+    </check>
+  </file>
+  <file filename="es/plpython.po">
+    <check name="PsqlCommand">
+      <item msgid="could not convert Python object into cstring: Python string representation appears to contain null bytes" msgstr="no se pudo convertir el objeto Python a un cstring: la representación de cadena Python parece tener bytes nulos (\0)"/>
+    </check>
+  </file>
+  <file filename="es/postgres.po">
+    <check name="PsqlCommand">
+      <item msgid="Escape sequence &quot;\%s&quot; is invalid." msgstr="La secuencia de escape «%s» no es válida."/>
+    </check>
+  </file>
   <file filename="fa/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="  \! [COMMAND]   execute command in shell or start interactive shell&#10;" msgstr="  \![COMMAND]   دستور را در پوسته اجرا می‌کند ویا پوسته محاوره‌ای را راه‌اندازی می‌کند&#10;"/>
+      <item msgid="  \cd [DIR]      change the current working directory&#10;" msgstr=" \cd[DIR]       فهرست کاری جاری را تغییر می‌دهد&#10;"/>
+      <item msgid="\connect: %s" msgstr="\اتصال به : %s"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="Password: " msgstr="رمز عبور:"/>
       <item msgid="SSL connection (cipher: %s, bits: %i)&#10;&#10;" msgstr="اتصال SSL (رمز : %s ، بیتها: %i) &#10;"/>
@@ -98,6 +118,13 @@
     </check>
   </file>
   <file filename="hu/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="&#10;For more information, type &quot;\?&quot; (for internal commands) or &quot;\help&quot;&#10;(for SQL commands) from within psql, or consult the psql section in&#10;the PostgreSQL documentation.&#10;&#10;Report bugs to &lt;pgsql-bugs@postgresql.org&gt;." msgstr="&#10;További informácihozz üss &quot;\?&quot;-t (belso parancsokhoz) vagy &quot;\help&quot;-t&#10;(SQL parancsokhoz) a psqlben, vagy olvasd el a psqlrol szoló részt&#10;a PostgreSQL dokumentációjában.&#10;&#10;Hibákat a &lt;pgsql-bugs@postgresql.org&gt;címen tudsz jelenteni."/>
+      <item msgid="No help available for '%-.*s'.&#10;Try \h with no arguments to see available help.&#10;" msgstr="'%-.*s'-h(oeö) nincs segítség.&#10;Próbáld a \h-t paraméter nélkül a rendelkezésre álló segítség megtekintéséhez.&#10;"/>
+      <item msgid="\connect: %s" msgstr="\kapcsolat: %s"/>
+      <item msgid="\copy: %s" msgstr="\másol: %s"/>
+      <item msgid="\copy: unexpected response (%d)&#10;" msgstr="\másol: nem várt válasz (%d)&#10;"/>
+    </check>
     <check name="ShortOption">
       <item msgid="&#10;For more information, type &quot;\?&quot; (for internal commands) or &quot;\help&quot;&#10;(for SQL commands) from within psql, or consult the psql section in&#10;the PostgreSQL documentation.&#10;&#10;Report bugs to &lt;pgsql-bugs@postgresql.org&gt;." msgstr="&#10;További informácihozz üss &quot;\?&quot;-t (belso parancsokhoz) vagy &quot;\help&quot;-t&#10;(SQL parancsokhoz) a psqlben, vagy olvasd el a psqlrol szoló részt&#10;a PostgreSQL dokumentációjában.&#10;&#10;Hibákat a &lt;pgsql-bugs@postgresql.org&gt;címen tudsz jelenteni."/>
       <item msgid="No help available for '%-.*s'.&#10;Try \h with no arguments to see available help.&#10;" msgstr="'%-.*s'-h(oeö) nincs segítség.&#10;Próbáld a \h-t paraméter nélkül a rendelkezésre álló segítség megtekintéséhez.&#10;"/>
@@ -110,6 +137,17 @@
       <item msgid="Enter new superuser password: " msgstr="新しいスーパーユーザのパスワードを入力してください:"/>
     </check>
   </file>
+  <file filename="ja/pg_ctl.po">
+    <check name="PsqlCommand">
+      <item msgid="%s: service &quot;%s&quot; already registered&#10;" msgstr="%s: サービス\&quot;%s\&quot;は登録済みです&#10;"/>
+    </check>
+  </file>
+  <file filename="ja/pg_dump.po">
+    <check name="PsqlCommand">
+      <item msgid="definition of view &quot;%s&quot; appears to be empty (length zero)&#10;" msgstr="ビュー\&quot;%s\&quot;の定義が空(長さが0)のようです&#10;"/>
+      <item msgid="query to obtain definition of view &quot;%s&quot; returned more than one definition&#10;" msgstr="ビュー\&quot;%s\&quot;の定義を取り出すための問い合わせが複数の定義を返しました&#10;"/>
+    </check>
+  </file>
   <file filename="ja/pgscripts.po">
     <check name="SuffixWhitespace">
       <item msgid="%s (%s/%s) " msgstr="%s (%s/%s)"/>
@@ -119,6 +157,13 @@
     </check>
   </file>
   <file filename="ja/postgres.po">
+    <check name="PsqlCommand">
+      <item msgid="&quot;\u&quot; must be followed by four hexadecimal digits." msgstr="&quot;\u&quot;の後には16進数の４桁が続かなければなりません"/>
+      <item msgid="Anyone can COPY to stdout or from stdin. psql's \copy command also works for anyone." msgstr="標準入出力経由のCOPYは誰でも実行可能です。またpsqlの\\copyも誰でも実行できます"/>
+      <item msgid="TRAP: %s(&quot;%s&quot;, File: &quot;%s&quot;, Line: %d)&#10;" msgstr="TRAP: %s(\&quot;%s\&quot;, ファイル: \&quot;%s\&quot;, 行数: %d)&#10;"/>
+      <item msgid="Use the escape string syntax for escapes, e.g., E'\r\n'." msgstr="エスケープ用のエスケープ文字列構文、例えばE'\\r\\n'を使用してください"/>
+      <item msgid="could not write archive status file &quot;%s&quot;: %m" msgstr="アーカイブステータスファイル\&quot;%s\&quot;を書き出せませんでした: %m"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="could not fork new process for connection: " msgstr="接続用の新しいプロセスをforkできませんでした"/>
       <item msgid="rule %s on " msgstr="のルール %s"/>
@@ -126,6 +171,10 @@
     </check>
   </file>
   <file filename="ja/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="\df does not take a &quot;w&quot; option with server version %d.%d&#10;" msgstr="サーバーバージョン%d.%dでは\dfは&quot;w&quot;オプションを受け付けません&#10;"/>
+      <item msgid="\df only takes [antwS+] as options&#10;" msgstr="\dfはオプションとして[antwS+]のみを取ることができます&#10;"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="Enter it again: " msgstr="もう一度入力してください："/>
       <item msgid="Password valid until " msgstr="パスワード有効期限"/>
@@ -171,9 +220,18 @@
     </check>
   </file>
   <file filename="ko/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="&#10;For more information, type &quot;\?&quot; (for internal commands) or &quot;\help&quot; (for SQL&#10;commands) from within psql, or consult the psql section in the PostgreSQL&#10;documentation.&#10;&#10;" msgstr="&#10;자세한 내용을 보려면 edb-psql 내에서 &quot;\?&quot;(내부 명령) 또는 &quot;\help&quot;(SQL&#10;명령)를 입력하거나 PostgreSQL&#10;설명서에서 psql 섹션을 참조하십시오.&#10;&#10;"/>
+      <item msgid="\connect: %s" msgstr="\연결: %s"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="Enter it again: " msgstr="다시 입력해 주세요:"/>
       <item msgid="Enter new password: " msgstr="새 암호를 입력하세요:"/>
+    </check>
+  </file>
+  <file filename="nb/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="  -P VAR[=ARG]    set printing option VAR to ARG (see \pset command)" msgstr="  -P VAR[=ARG]    sette printvalg VAR til ARG (se \pset-kommandoen)"/>
     </check>
   </file>
   <file filename="ro/pg_dump.po">
@@ -181,7 +239,15 @@
       <item msgid="internal error -- neither th nor fh specified in tarReadRaw()&#10;" msgstr="eroare internă --nu a fost specificat nici th, nici fh în ReadRaw()&#10;"/>
     </check>
   </file>
+  <file filename="ro/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="\connect: %s" msgstr="\conect: %s"/>
+    </check>
+  </file>
   <file filename="sv/libpq.po">
+    <check name="PsqlCommand">
+      <item msgid="server closed the connection unexpectedly&#10;&#9;This probably means the server terminated abnormally&#10;&#9;before or while processing the request.&#10;" msgstr="servern stängde oväntat ner uppkopplingen&#10;\tTroligen så terminerade servern pga något fel antingen&#10;\tinnan eller under tiden den bearbetade en förfrågan.&#10;"/>
+    </check>
     <check name="ShortOption">
       <item msgid="could not set socket to close-on-exec mode: %s&#10;" msgstr="kunde inte ställa in uttag (socket) i &quot;close-on-exec&quot;-läge: %s&#10;"/>
     </check>
@@ -201,6 +267,9 @@
     </check>
   </file>
   <file filename="sv/postgres.po">
+    <check name="PsqlCommand">
+      <item msgid="Anyone can COPY to stdout or from stdin. psql's \copy command also works for anyone." msgstr="Vem som helst can göra COPY till stdout eller från stdin. psql's \copy-kommando fungerar också för alla."/>
+    </check>
     <check name="ShortOption">
       <item msgid="could not format &quot;path&quot; value" msgstr="kunde inte formattera &quot;path&quot;-värde"/>
       <item msgid="shared table &quot;%s&quot; can only be reindexed in stand-alone mode" msgstr="delad tabell &quot;%s&quot; kan bara omindexeras i &quot;stand-alone&quot;-läge"/>
@@ -254,7 +323,18 @@
       <item msgid="LINE %d: " msgstr="第%d行"/>
     </check>
   </file>
+  <file filename="zh_CN/postgres.po">
+    <check name="PsqlCommand">
+      <item msgid="%s is not a member of extension &quot;%s&quot;" msgstr="%s不是扩展&quot;%s&quot;的成员\v"/>
+      <item msgid="Unicode escapes must be \uXXXX or \UXXXXXXXX." msgstr="Unicode转义字符必须是\uXXXX或\UXXXXXXXX."/>
+    </check>
+  </file>
   <file filename="zh_CN/psql.po">
+    <check name="PsqlCommand">
+      <item msgid="&#10;For more information, type &quot;\?&quot; (for internal commands) or &quot;\help&quot; (for SQL&#10;commands) from within psql, or consult the psql section in the PostgreSQL&#10;documentation.&#10;&#10;" msgstr="&#10;更多信息，请在psql中输入&quot;\?&quot;(用于内部指令)或者 &quot;\help&quot;(用于SQL命令)，&#10;或者参考PostgreSQL文档中的psql章节.&#10;&#10;"/>
+      <item msgid="\connect: %s" msgstr="\连线：%s"/>
+      <item msgid="\pset: allowed formats are unaligned, aligned, wrapped, html, latex, troff-ms&#10;" msgstr="\pset：可以使用的格式有unaligned, aligned, wrapped, html, latex, troff-ms&#10;"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="Enter it again: " msgstr="再次键入："/>
       <item msgid="Enter new password: " msgstr="输入新的密码："/>
@@ -311,6 +391,14 @@
     </check>
   </file>
   <file filename="zh_TW/postgres.po">
+    <check name="PsqlCommand">
+      <item msgid="Anyone can COPY to stdout or from stdin. psql's \copy command also works for anyone." msgstr="任何人都可以 COPY 至 stdout (或從 stdin 複製)。psql 的\複製指令也適用於任何人。"/>
+      <item msgid="Use '' to write quotes in strings. \' is insecure in client-only encodings." msgstr="使用 &amp;apos;&amp;apos; 在字串中寫入引號。\&amp;apos; 在僅用戶端編碼中並不安全。"/>
+      <item msgid="Use the escape string syntax for backslashes, e.g., E'\\'." msgstr="使用反斜線的逸出字元字串語法，例如 E&amp;apos;\\&amp;apos;。"/>
+      <item msgid="Use the escape string syntax for escapes, e.g., E'\r\n'." msgstr="使用逸出字元的逸出字元字串語法，例如 E&amp;apos;\r\n&amp;apos;。"/>
+      <item msgid="nonstandard use of \' in a string literal" msgstr="字串實量中的 \&amp;apos; 使用非標準"/>
+      <item msgid="unsafe use of \' in a string literal" msgstr="字串實量中的 \&amp;apos; 使用不安全"/>
+    </check>
     <check name="SuffixWhitespace">
       <item msgid="CONTEXT:  " msgstr="上下文:"/>
       <item msgid="DETAIL:  " msgstr="詳細: "/>
